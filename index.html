@@ -329,12 +329,7 @@
           </div>
 
           <div class="info-section">
-            <h3><i class="fa-solid fa-calendar-days"></i> Dias de Atendimento</h3>
-            <p id="profDias">-</p>
-          </div>
-
-          <div class="info-section">
-            <h3><i class="fa-solid fa-clock"></i> Períodos</h3>
+            <h3><i class="fa-solid fa-clock"></i> Período de Atendimento</h3>
             <p id="profPeriodos">-</p>
           </div>
 
@@ -384,9 +379,6 @@
         const cols = p(lines[i]).map(c => c.replace(/^"|"$/g, '').trim());
 
         if (cols.length >= 2) {
-          // A coluna 12 trazia a foto erroneamente no mapeamento anterior
-          // A foto original da pergunta de imagem do Forms fica na coluna 12 ou posterior.
-          // Mapeamos dinamicamente buscando o link de drive no registro:
           let fotoUrl = '';
           cols.forEach(c => {
             if (c.includes('drive.google.com')) {
@@ -398,19 +390,15 @@
           const sabado = cols[14] || '';
           const domingo = cols[15] || '';
 
-          let diasList = [];
           let periodosList = [];
 
           if (segAsex && segAsex.toUpperCase() !== 'N/A' && !segAsex.includes('drive.google.com')) {
-            diasList.push('Segunda a Sexta');
             periodosList.push(`Seg a Sex: ${segAsex}`);
           }
           if (sabado && sabado.toUpperCase() !== 'N/A') {
-            diasList.push('Sábado');
             periodosList.push(`Sáb: ${sabado}`);
           }
           if (domingo && domingo.toUpperCase() !== 'N/A') {
-            diasList.push('Domingos e Feriados');
             periodosList.push(`Dom/Fer: ${domingo}`);
           }
 
@@ -426,7 +414,6 @@
             whatsapp: cols[9] ? cols[9].replace(/\D/g, '') : '',
             email: cols[10] || '',
             instagram: cols[11] ? cols[11].replace('@', '') : '',
-            dias: diasList.length > 0 ? diasList.join(', ') : 'Não informado',
             periodos: periodosList.length > 0 ? periodosList.join(' | ') : 'Não informado',
             foto: formatarUrlDrive(fotoUrl)
           });
@@ -511,7 +498,6 @@
       document.getElementById('profServicos').innerText = p.servicos || '-';
       document.getElementById('profPublico').innerText = p.publico || '-';
       document.getElementById('profModalidade').innerText = p.modalidade || '-';
-      document.getElementById('profDias').innerText = p.dias;
       document.getElementById('profPeriodos').innerText = p.periodos;
 
       const fotoContainer = document.getElementById('profFotoContainer');
