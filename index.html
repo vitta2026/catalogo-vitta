@@ -210,19 +210,21 @@
       margin-top: 8px;
     }
 
-    .profile-info { padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+    .profile-info { padding: 28px; display: flex; flex-direction: column; gap: 18px; }
     .info-section h3 {
       font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--secondary);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    .contact-links { display: flex; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
+    .info-section p { font-size: 0.95rem; color: var(--text-main); }
+
+    .contact-links { display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
     .contact-btn {
       padding: 10px 16px;
       border-radius: 8px;
@@ -322,8 +324,18 @@
           </div>
 
           <div class="info-section">
-            <h3><i class="fa-solid fa-calendar-check"></i> Atendimento / Modalidade</h3>
-            <p id="profAtendimento">-</p>
+            <h3><i class="fa-solid fa-laptop-house"></i> Modalidade de Atendimento</h3>
+            <p id="profModalidade">-</p>
+          </div>
+
+          <div class="info-section">
+            <h3><i class="fa-solid fa-calendar-days"></i> Dias de Atendimento</h3>
+            <p id="profDias">-</p>
+          </div>
+
+          <div class="info-section">
+            <h3><i class="fa-solid fa-clock"></i> Horários e Períodos</h3>
+            <p id="profHorarios">-</p>
           </div>
 
           <div class="info-section">
@@ -372,6 +384,26 @@
         const cols = p(lines[i]).map(c => c.replace(/^"|"$/g, '').trim());
 
         if (cols.length >= 2) {
+          const segAsex = cols[12] || '';
+          const sabado = cols[13] || '';
+          const domingo = cols[14] || '';
+
+          let diasList = [];
+          let horariosList = [];
+
+          if (segAsex && segAsex.toUpperCase() !== 'N/A') {
+            diasList.push('Segunda a Sexta');
+            horariosList.push(`Seg a Sex: ${segAsex}`);
+          }
+          if (sabado && sabado.toUpperCase() !== 'N/A') {
+            diasList.push('Sábado');
+            horariosList.push(`Sáb: ${sabado}`);
+          }
+          if (domingo && domingo.toUpperCase() !== 'N/A') {
+            diasList.push('Domingos e Feriados');
+            horariosList.push(`Dom/Fer: ${domingo}`);
+          }
+
           result.push({
             nome: cols[1] || '',
             cidade: cols[2] || '',
@@ -380,11 +412,13 @@
             registro: cols[5] || '',
             bio: cols[6] || '',
             publico: cols[7] || '',
-            atendimento: cols[8] || '',
+            modalidade: cols[8] || '',
             whatsapp: cols[9] ? cols[9].replace(/\D/g, '') : '',
             email: cols[10] || '',
             instagram: cols[11] ? cols[11].replace('@', '') : '',
-            foto: formatarUrlDrive(cols[12] || '')
+            dias: diasList.length > 0 ? diasList.join(', ') : 'Não informado',
+            horarios: horariosList.length > 0 ? horariosList.join(' | ') : 'Não informado',
+            foto: formatarUrlDrive(cols[15] || '')
           });
         }
       }
@@ -466,7 +500,9 @@
       document.getElementById('profEspecialidades').innerText = p.especialidade || '-';
       document.getElementById('profServicos').innerText = p.servicos || '-';
       document.getElementById('profPublico').innerText = p.publico || '-';
-      document.getElementById('profAtendimento').innerText = p.atendimento || '-';
+      document.getElementById('profModalidade').innerText = p.modalidade || '-';
+      document.getElementById('profDias').innerText = p.dias;
+      document.getElementById('profHorarios').innerText = p.horarios;
 
       const fotoContainer = document.getElementById('profFotoContainer');
       if (p.foto) {
