@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catálogo de Profissionais - Rede Vitta</title>
   
-  <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -323,7 +322,7 @@
           </div>
 
           <div class="info-section">
-            <h3><i class="fa-solid fa-calendar-check"></i> Atendimento</h3>
+            <h3><i class="fa-solid fa-calendar-check"></i> Atendimento / Modalidade</h3>
             <p id="profAtendimento">-</p>
           </div>
 
@@ -341,15 +340,10 @@
   </footer>
 
   <script>
-    // =========================================================================
-    // INSIRA SEU LINK DO CSV ABAIXO
-    // (Atenção: Use o link obtido em Arquivo > Compartilhar > Publicar na Web)
-    // =========================================================================
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQRSLkWdYOqO25SuyaGCdvfxKvoPXMRsWs9WBQ22Q_G64-DnHWdyWKEUbkbm8LirCKb0yZRT_Le-j5Q/pub?gid=1879601222&single=true&output=csv';
 
     let listaCompleta = [];
 
-    // Formata o link do Google Drive para virar imagem exibível
     function formatarUrlDrive(url) {
       if (!url) return '';
       const match = url.match(/id=([a-zA-Z0-9_-]+)/) || url.match(/\/d\/([a-zA-Z0-9_-]+)/);
@@ -359,28 +353,23 @@
       return url;
     }
 
-    // Parser flexível para lidar com vírgula ou ponto e vírgula
     function parseCSV(text) {
-      const lines = text.split(/\r\n|\n/);
+      const p = p => {
+        let arr = [''], i = 0, c = false;
+        for (let ch of p) {
+          if (ch === '"') { c = !c; }
+          else if (ch === ',' && !c) { arr.push(''); i++; }
+          else { arr[i] += ch; }
+        }
+        return arr;
+      };
+
+      const lines = text.split(/\r?\n/);
       const result = [];
-      
-      // Identifica se o separador é vírgula ou ponto e vírgula
-      const primeiraLinha = lines[0] || '';
-      const delimiter = primeiraLinha.includes(';') ? ';' : ',';
 
       for (let i = 1; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) continue;
-
-        // Expressão para separar respeitando aspas
-        const regex = new RegExp(`(?:^|${delimiter})(?:"([^"]*)"|([^"${delimiter}]*))`, 'g');
-        const cols = [];
-        let match;
-        
-        while ((match = regex.exec(line)) !== null) {
-          let val = match[1] !== undefined ? match[1] : match[2];
-          cols.push(val ? val.trim() : '');
-        }
+        if (!lines[i].trim()) continue;
+        const cols = p(lines[i]).map(c => c.replace(/^"|"$/g, '').trim());
 
         if (cols.length >= 2) {
           result.push({
@@ -417,7 +406,7 @@
         }
       } catch (error) {
         console.error('Erro ao carregar dados:', error);
-        document.getElementById('listaProfissionais').innerHTML = '<div style="padding:10px; color:red;">Erro ao carregar os dados. Verifique a URL do CSV.</div>';
+        document.getElementById('listaProfissionais').innerHTML = '<div style="padding:10px; color:red;">Erro ao carregar os dados. Verifique a conexão com o Google Sheets.</div>';
       }
     }
 
