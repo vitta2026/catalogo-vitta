@@ -334,8 +334,8 @@
           </div>
 
           <div class="info-section">
-            <h3><i class="fa-solid fa-clock"></i> Horários e Períodos</h3>
-            <p id="profHorarios">-</p>
+            <h3><i class="fa-solid fa-clock"></i> Períodos</h3>
+            <p id="profPeriodos">-</p>
           </div>
 
           <div class="info-section">
@@ -384,24 +384,34 @@
         const cols = p(lines[i]).map(c => c.replace(/^"|"$/g, '').trim());
 
         if (cols.length >= 2) {
-          const segAsex = cols[12] || '';
-          const sabado = cols[13] || '';
-          const domingo = cols[14] || '';
+          // A coluna 12 trazia a foto erroneamente no mapeamento anterior
+          // A foto original da pergunta de imagem do Forms fica na coluna 12 ou posterior.
+          // Mapeamos dinamicamente buscando o link de drive no registro:
+          let fotoUrl = '';
+          cols.forEach(c => {
+            if (c.includes('drive.google.com')) {
+              fotoUrl = c;
+            }
+          });
+
+          const segAsex = cols[13] || cols[12] || '';
+          const sabado = cols[14] || '';
+          const domingo = cols[15] || '';
 
           let diasList = [];
-          let horariosList = [];
+          let periodosList = [];
 
-          if (segAsex && segAsex.toUpperCase() !== 'N/A') {
+          if (segAsex && segAsex.toUpperCase() !== 'N/A' && !segAsex.includes('drive.google.com')) {
             diasList.push('Segunda a Sexta');
-            horariosList.push(`Seg a Sex: ${segAsex}`);
+            periodosList.push(`Seg a Sex: ${segAsex}`);
           }
           if (sabado && sabado.toUpperCase() !== 'N/A') {
             diasList.push('Sábado');
-            horariosList.push(`Sáb: ${sabado}`);
+            periodosList.push(`Sáb: ${sabado}`);
           }
           if (domingo && domingo.toUpperCase() !== 'N/A') {
             diasList.push('Domingos e Feriados');
-            horariosList.push(`Dom/Fer: ${domingo}`);
+            periodosList.push(`Dom/Fer: ${domingo}`);
           }
 
           result.push({
@@ -417,8 +427,8 @@
             email: cols[10] || '',
             instagram: cols[11] ? cols[11].replace('@', '') : '',
             dias: diasList.length > 0 ? diasList.join(', ') : 'Não informado',
-            horarios: horariosList.length > 0 ? horariosList.join(' | ') : 'Não informado',
-            foto: formatarUrlDrive(cols[15] || '')
+            periodos: periodosList.length > 0 ? periodosList.join(' | ') : 'Não informado',
+            foto: formatarUrlDrive(fotoUrl)
           });
         }
       }
@@ -502,7 +512,7 @@
       document.getElementById('profPublico').innerText = p.publico || '-';
       document.getElementById('profModalidade').innerText = p.modalidade || '-';
       document.getElementById('profDias').innerText = p.dias;
-      document.getElementById('profHorarios').innerText = p.horarios;
+      document.getElementById('profPeriodos').innerText = p.periodos;
 
       const fotoContainer = document.getElementById('profFotoContainer');
       if (p.foto) {
