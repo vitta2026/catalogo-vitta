@@ -7,22 +7,23 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      --primary: #5c2483;
-      --primary-dark: #431763;
-      --secondary: #00a896;
-      --accent: #fbc02d;
-      --bg: #f4f6f9;
+      --primary: #4a154b;
+      --primary-light: #6b21a8;
+      --secondary: #00b894;
+      --secondary-light: #e6f7f5;
+      --accent: #00d2d3;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
-      --text-main: #2b2d42;
-      --text-muted: #6c757d;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
       --border: #e2e8f0;
-      --radius: 12px;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      --radius: 16px;
+      --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,14 +33,13 @@
       background-color: var(--bg);
       color: var(--text-main);
       line-height: 1.5;
-      padding-bottom: 40px;
+      padding-bottom: 60px;
     }
 
     header {
       background: var(--card-bg);
       border-bottom: 1px solid var(--border);
       padding: 16px 24px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
 
     .header-container {
@@ -48,199 +48,333 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
     }
 
     .brand { display: flex; align-items: center; gap: 12px; }
-    .brand-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
-    .brand-subtitle { font-size: 0.875rem; color: var(--secondary); font-weight: 600; }
+    .brand-logo {
+      background: #f3e8ff;
+      color: var(--primary);
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    .brand-title { font-size: 1.3rem; font-weight: 800; color: var(--primary); line-height: 1.1; }
+    .brand-subtitle { font-size: 0.8rem; color: var(--secondary); font-weight: 700; }
 
     .badge-location {
-      background-color: #e6f7f5;
+      background-color: var(--secondary-light);
       color: var(--secondary);
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: 20px;
       font-size: 0.85rem;
-      font-weight: 600;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .container { max-width: 1200px; margin: 32px auto; padding: 0 20px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
+    /* Hero Section */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 40px 0;
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .hero-title span {
+      color: var(--secondary);
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 440px;
+    }
+
+    .hero-image-container {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero-avatar-main {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #a855f7 0%, #00d2d3 100%);
+      padding: 6px;
+    }
+    
+    .hero-avatar-main img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #fff;
+    }
+
+    /* Filter Card */
     .filter-card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 24px;
       box-shadow: var(--shadow);
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
     .filter-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
       align-items: end;
     }
 
     .filter-group { display: flex; flex-direction: column; gap: 6px; }
     .filter-group label {
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.75rem;
+      font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    .filter-group select {
+    .filter-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .filter-input-wrapper i {
+      position: absolute;
+      left: 14px;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .filter-group select, .filter-group input {
       width: 100%;
-      padding: 12px;
+      padding: 12px 12px 12px 38px;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      background-color: #fafafa;
-      font-size: 0.95rem;
+      border-radius: 10px;
+      background-color: #f8fafc;
+      font-size: 0.9rem;
       color: var(--text-main);
       outline: none;
-    }
-
-    .btn-actions { display: flex; gap: 10px; }
-    .btn {
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .btn-outline { background-color: transparent; border: 1px solid var(--border); color: var(--text-muted); }
-
-    .content-layout {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 28px;
-    }
-
-    @media (max-width: 868px) {
-      .content-layout { grid-template-columns: 1fr; }
-    }
-
-    .list-container {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 16px;
-      max-height: 600px;
-      overflow-y: auto;
-    }
-
-    .list-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #f0f0f0;
-    }
-
-    .professional-item {
-      padding: 12px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-bottom: 8px;
-      border: 1px solid transparent;
       transition: all 0.2s;
     }
 
-    .professional-item:hover { background-color: #f8f5fb; }
-    .professional-item.active { background-color: #f3e8ff; border-color: var(--primary); }
+    .filter-group select:focus, .filter-group input:focus {
+      border-color: var(--primary);
+      background-color: #fff;
+    }
 
-    .item-name { font-weight: 600; color: var(--text-main); font-size: 0.95rem; }
-    .item-city { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+    .btn-search {
+      background-color: var(--secondary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.2s;
+    }
 
-    .details-card {
+    .btn-search:hover { background-color: #00a082; }
+
+    .btn-reset {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-reset:hover { color: var(--primary); }
+
+    /* Results Header */
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .results-count {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .prof-card {
       background: var(--card-bg);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 280px 1fr;
-    }
-
-    @media (max-width: 650px) {
-      .details-card { grid-template-columns: 1fr; }
-    }
-
-    .profile-sidebar {
-      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white;
-      padding: 28px 20px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid var(--border);
     }
 
-    .profile-avatar {
-      width: 140px;
-      height: 140px;
+    .prof-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .prof-fav {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      color: #cbd5e1;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .prof-fav:hover { color: #ef4444; }
+
+    .prof-avatar {
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      border: 4px solid rgba(255, 255, 255, 0.2);
-      background-color: #eceff1;
+      margin-bottom: 16px;
+      overflow: hidden;
+      background: #f1f5f9;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      overflow: hidden;
+      border: 3px solid #f8fafc;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
-    .profile-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+    .prof-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .prof-avatar i { font-size: 2.5rem; color: #94a3b8; }
 
-    .profile-register {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 4px 12px;
-      border-radius: 12px;
+    .prof-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .prof-profession {
       font-size: 0.85rem;
       font-weight: 600;
-      margin-top: 8px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
     }
 
-    .profile-info { padding: 28px; display: flex; flex-direction: column; gap: 18px; }
-    .info-section h3 {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--secondary);
-      margin-bottom: 4px;
+    .prof-spec {
+      font-size: 0.8rem;
+      color: var(--primary-light);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .prof-location {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 14px;
+    }
+
+    .prof-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .prof-tag {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .prof-hours {
+      font-size: 0.78rem;
+      color: var(--text-muted);
       display: flex;
       align-items: center;
       gap: 6px;
+      margin-bottom: 16px;
     }
 
-    .info-section p { font-size: 0.95rem; color: var(--text-main); }
+    .prof-actions {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      justify-content: center;
+      margin-top: auto;
+    }
 
-    .contact-links { display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
-    .contact-btn {
-      padding: 10px 16px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-      display: inline-flex;
+    .btn-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      font-size: 1.05rem;
+      transition: opacity 0.2s;
     }
 
-    .btn-whatsapp { background-color: #25d366; color: white; }
-    .btn-email { background-color: #ea4335; color: white; }
-    .btn-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
+    .btn-icon:hover { opacity: 0.9; }
+    .btn-wsp { background-color: #25d366; }
+    .btn-eml { background-color: #ea4335; }
+    .btn-ins { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
 
-    footer { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 40px; }
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 50px;
+    }
   </style>
 </head>
 <body>
@@ -248,7 +382,7 @@
   <header>
     <div class="header-container">
       <div class="brand">
-        <i class="fa-solid fa-hospital-user fa-2x" style="color: var(--primary);"></i>
+        <div class="brand-logo"><i class="fa-solid fa-hospital-user"></i></div>
         <div>
           <div class="brand-title">Rede Vitta</div>
           <div class="brand-subtitle">Coworking Saúde</div>
@@ -261,85 +395,91 @@
   </header>
 
   <div class="container">
+    
+    <!-- Hero Banner -->
+    <div class="hero">
+      <div>
+        <h1 class="hero-title">Catálogo de<br><span>Profissionais</span></h1>
+        <p class="hero-subtitle">Busque, conecte e transforme sua saúde e bem-estar com os melhores especialistas.</p>
+      </div>
+      <div class="hero-image-container">
+        <div class="hero-avatar-main">
+          <img src="https://images.unsplash.com/photo-1594824813566-78a9a441e8e2?auto=format&fit=crop&q=80&w=400" alt="Profissional da Saúde">
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtros -->
     <div class="filter-card">
       <div class="filter-grid">
+        
+        <!-- 1. Profissão -->
         <div class="filter-group">
-          <label for="selectEspecialidade">Especialidade</label>
-          <select id="selectEspecialidade" onchange="filtrarProfissionais()">
-            <option value="">Todas as Especialidades</option>
-          </select>
+          <label>1. Profissão</label>
+          <div class="filter-input-wrapper">
+            <i class="fa-solid fa-user-doctor"></i>
+            <select id="selectProfissao" onchange="aplicarFiltros()">
+              <option value="">Todas as Profissões</option>
+            </select>
+          </div>
         </div>
 
+        <!-- 2. Cidade -->
         <div class="filter-group">
-          <label for="selectCidade">Cidade</label>
-          <select id="selectCidade" onchange="filtrarProfissionais()">
-            <option value="">Todas as Cidades</option>
-          </select>
+          <label>2. Cidade</label>
+          <div class="filter-input-wrapper">
+            <i class="fa-solid fa-location-dot"></i>
+            <select id="selectCidade" onchange="aplicarFiltros()">
+              <option value="">Todas as Cidades</option>
+            </select>
+          </div>
         </div>
 
-        <div class="btn-actions">
-          <button class="btn btn-outline" onclick="limparFiltros()">
-            <i class="fa-solid fa-rotate-left"></i> Limpar
+        <!-- 3. Especialidade -->
+        <div class="filter-group">
+          <label>3. Especialidade</label>
+          <div class="filter-input-wrapper">
+            <i class="fa-solid fa-stethoscope"></i>
+            <select id="selectEspecialidade" onchange="aplicarFiltros()">
+              <option value="">Todas as Especialidades</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 4. Serviços (Busca aberta) -->
+        <div class="filter-group">
+          <label>4. Serviços Prestados</label>
+          <div class="filter-input-wrapper">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="inputServicos" placeholder="Ex: Consulta, Pré-natal..." oninput="aplicarFiltros()">
+          </div>
+        </div>
+
+        <!-- Botão de Ação -->
+        <div style="display: flex; flex-direction: column;">
+          <button class="btn-search" onclick="aplicarFiltros()">
+            <i class="fa-solid fa-magnifying-glass"></i> Buscar
+          </button>
+          <button class="btn-reset" onclick="limparFiltros()">
+            <i class="fa-solid fa-rotate-left"></i> Limpar filtros
           </button>
         </div>
+
       </div>
     </div>
 
-    <div class="content-layout">
-      <div class="list-container">
-        <div class="list-title">Profissionais Encontrados</div>
-        <div id="listaProfissionais">
-          <div style="padding:10px; color:var(--text-muted);">Carregando dados...</div>
-        </div>
-      </div>
+    <!-- Resultados -->
+    <div class="results-header">
+      <div class="results-count" id="contadorResultados">Profissionais encontrados (0)</div>
+    </div>
 
-      <div class="details-card" id="detalheProfissional">
-        <div class="profile-sidebar">
-          <div class="profile-avatar" id="profFotoContainer">
-            <i class="fa-solid fa-user"></i>
-          </div>
-          <h2 id="profNome" style="font-size: 1.2rem;">Selecione um profissional</h2>
-          <div class="profile-register" id="profRegistro">CRP/CRM --</div>
-        </div>
-
-        <div class="profile-info">
-          <div class="info-section">
-            <h3><i class="fa-solid fa-align-left"></i> Mini Biografia</h3>
-            <p id="profBio">Clique em um profissional da lista ao lado para ver os detalhes completos.</p>
-          </div>
-
-          <div class="info-section">
-            <h3><i class="fa-solid fa-stethoscope"></i> Especialidades</h3>
-            <p id="profEspecialidades">-</p>
-          </div>
-
-          <div class="info-section">
-            <h3><i class="fa-solid fa-hand-holding-medical"></i> Serviços Prestados</h3>
-            <p id="profServicos">-</p>
-          </div>
-
-          <div class="info-section">
-            <h3><i class="fa-solid fa-users"></i> Público-alvo</h3>
-            <p id="profPublico">-</p>
-          </div>
-
-          <div class="info-section">
-            <h3><i class="fa-solid fa-laptop-house"></i> Modalidade de Atendimento</h3>
-            <p id="profModalidade">-</p>
-          </div>
-
-          <div class="info-section">
-            <h3><i class="fa-solid fa-clock"></i> Período de Atendimento</h3>
-            <p id="profPeriodos">-</p>
-          </div>
-
-          <div class="info-section">
-            <h3><i class="fa-solid fa-address-book"></i> Contato</h3>
-            <div class="contact-links" id="profContatos"></div>
-          </div>
-        </div>
+    <!-- Grid de Cards dos Profissionais -->
+    <div class="cards-grid" id="gridProfissionais">
+      <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">
+        Carregando profissionais da Rede Vitta...
       </div>
     </div>
+
   </div>
 
   <footer>
@@ -361,9 +501,9 @@
     }
 
     function parseCSV(text) {
-      const p = p => {
+      const p = textLine => {
         let arr = [''], i = 0, c = false;
-        for (let ch of p) {
+        for (let ch of textLine) {
           if (ch === '"') { c = !c; }
           else if (ch === ',' && !c) { arr.push(''); i++; }
           else { arr[i] += ch; }
@@ -387,34 +527,19 @@
           });
 
           const segAsex = cols[13] || cols[12] || '';
-          const sabado = cols[14] || '';
-          const domingo = cols[15] || '';
-
-          let periodosList = [];
-
-          if (segAsex && segAsex.toUpperCase() !== 'N/A' && !segAsex.includes('drive.google.com')) {
-            periodosList.push(`Seg a Sex: ${segAsex}`);
-          }
-          if (sabado && sabado.toUpperCase() !== 'N/A') {
-            periodosList.push(`Sáb: ${sabado}`);
-          }
-          if (domingo && domingo.toUpperCase() !== 'N/A') {
-            periodosList.push(`Dom/Fer: ${domingo}`);
-          }
 
           result.push({
             nome: cols[1] || '',
             cidade: cols[2] || '',
-            especialidade: cols[3] || '',
-            servicos: cols[4] || '',
-            registro: cols[5] || '',
-            bio: cols[6] || '',
-            publico: cols[7] || '',
-            modalidade: cols[8] || '',
+            profissao: cols[3] || 'Profissional da Saúde',
+            especialidade: cols[4] || cols[3] || '',
+            servicos: cols[5] || cols[4] || '',
+            registro: cols[6] || '',
+            bio: cols[7] || '',
             whatsapp: cols[9] ? cols[9].replace(/\D/g, '') : '',
             email: cols[10] || '',
             instagram: cols[11] ? cols[11].replace('@', '') : '',
-            periodos: periodosList.length > 0 ? periodosList.join(' | ') : 'Não informado',
+            horario: segAsex && segAsex.toUpperCase() !== 'N/A' ? `Seg a Sex: ${segAsex}` : 'Horário a combinar',
             foto: formatarUrlDrive(fotoUrl)
           });
         }
@@ -429,130 +554,118 @@
         listaCompleta = parseCSV(data);
         
         preencherFiltros();
-        renderizarLista(listaCompleta);
-        if (listaCompleta.length > 0) {
-          exibirDetalhes(listaCompleta[0]);
-        } else {
-          document.getElementById('listaProfissionais').innerHTML = '<div style="padding:10px; color:var(--text-muted);">Nenhum registro encontrado na planilha.</div>';
-        }
+        renderizarCards(listaCompleta);
       } catch (error) {
         console.error('Erro ao carregar dados:', error);
-        document.getElementById('listaProfissionais').innerHTML = '<div style="padding:10px; color:red;">Erro ao carregar os dados. Verifique a conexão com o Google Sheets.</div>';
+        document.getElementById('gridProfissionais').innerHTML = 
+          '<div style="grid-column: 1/-1; text-align: center; color: red;">Erro ao carregar a lista de profissionais.</div>';
       }
     }
 
     function preencherFiltros() {
-      const selectEsp = document.getElementById('selectEspecialidade');
+      const selectProf = document.getElementById('selectProfissao');
       const selectCid = document.getElementById('selectCidade');
+      const selectEsp = document.getElementById('selectEspecialidade');
 
-      selectEsp.innerHTML = '<option value="">Todas as Especialidades</option>';
-      selectCid.innerHTML = '<option value="">Todas as Cidades</option>';
-
-      const especialidades = new Set();
+      const profissoes = new Set();
       const cidades = new Set();
+      const especialidades = new Set();
 
       listaCompleta.forEach(p => {
-        if(p.especialidade) especialidades.add(p.especialidade);
-        if(p.cidade) cidades.add(p.cidade);
+        if (p.profissao) profissoes.add(p.profissao);
+        if (p.cidade) cidades.add(p.cidade);
+        if (p.especialidade) {
+          p.especialidade.split(',').forEach(e => especialidades.add(e.trim()));
+        }
       });
 
-      especialidades.forEach(esp => {
-        selectEsp.innerHTML += `<option value="${esp}">${esp}</option>`;
-      });
-
-      cidades.forEach(cid => {
-        selectCid.innerHTML += `<option value="${cid}">${cid}</option>`;
-      });
+      profissoes.forEach(prof => selectProf.innerHTML += `<option value="${prof}">${prof}</option>`);
+      cidades.forEach(cid => selectCid.innerHTML += `<option value="${cid}">${cid}</option>`);
+      especialidades.forEach(esp => selectEsp.innerHTML += `<option value="${esp}">${esp}</option>`);
     }
 
-    function renderizarLista(profissionais) {
-      const container = document.getElementById('listaProfissionais');
-      container.innerHTML = '';
+    function renderizarCards(profissionais) {
+      const grid = document.getElementById('gridProfissionais');
+      const contador = document.getElementById('contadorResultados');
+      grid.innerHTML = '';
+      contador.innerText = `Profissionais encontrados (${profissionais.length})`;
 
       if (profissionais.length === 0) {
-        container.innerHTML = '<div style="padding:10px; color:var(--text-muted);">Nenhum profissional encontrado.</div>';
+        grid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">
+            Nenhum profissional encontrado com os filtros selecionados.
+          </div>`;
         return;
       }
 
-      profissionais.forEach((p, index) => {
-        const item = document.createElement('div');
-        item.className = `professional-item ${index === 0 ? 'active' : ''}`;
-        item.innerHTML = `
-          <div class="item-name">${p.nome}</div>
-          <div class="item-city"><i class="fa-solid fa-location-dot"></i> ${p.cidade} - ${p.especialidade}</div>
+      profissionais.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'prof-card';
+
+        // Avatar
+        const avatarHTML = p.foto 
+          ? `<img src="${p.foto}" alt="${p.nome}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\\'fa-solid fa-user\\'></i>';">`
+          : `<i class="fa-solid fa-user"></i>`;
+
+        // Tags de Serviços
+        const tagsArr = p.servicos ? p.servicos.split(',').slice(0, 3) : [];
+        const tagsHTML = tagsArr.map(t => `<span class="prof-tag">${t.trim()}</span>`).join('');
+
+        // Links de Contato
+        let contatosHTML = '';
+        if (p.whatsapp) {
+          contatosHTML += `<a href="https://wa.me/55${p.whatsapp}" target="_blank" class="btn-icon btn-wsp" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>`;
+        }
+        if (p.email) {
+          contatosHTML += `<a href="mailto:${p.email}" class="btn-icon btn-eml" title="E-mail"><i class="fa-solid fa-envelope"></i></a>`;
+        }
+        if (p.instagram) {
+          contatosHTML += `<a href="https://instagram.com/${p.instagram}" target="_blank" class="btn-icon btn-ins" title="Instagram"><i class="fa-brands fa-instagram"></i></a>`;
+        }
+
+        card.innerHTML = `
+          <i class="fa-regular fa-heart prof-fav"></i>
+          <div class="prof-avatar">${avatarHTML}</div>
+          <div class="prof-name">${p.nome}</div>
+          <div class="prof-profession">${p.profissao}</div>
+          ${p.especialidade ? `<div class="prof-spec">${p.especialidade}</div>` : ''}
+          <div class="prof-location"><i class="fa-solid fa-location-dot"></i> ${p.cidade || 'Itapevi - SP'}</div>
+          
+          <div class="prof-tags">${tagsHTML}</div>
+
+          <div class="prof-hours"><i class="fa-regular fa-clock"></i> ${p.horario}</div>
+
+          <div class="prof-actions">${contatosHTML}</div>
         `;
-        item.onclick = () => {
-          document.querySelectorAll('.professional-item').forEach(el => el.classList.remove('active'));
-          item.classList.add('active');
-          exibirDetalhes(p);
-        };
-        container.appendChild(item);
+
+        grid.appendChild(card);
       });
     }
 
-    function exibirDetalhes(p) {
-      document.getElementById('profNome').innerText = p.nome || 'Sem nome';
-      document.getElementById('profRegistro').innerText = p.registro ? `Reg: ${p.registro}` : 'Sem registro';
-      document.getElementById('profBio').innerText = p.bio || '-';
-      document.getElementById('profEspecialidades').innerText = p.especialidade || '-';
-      document.getElementById('profServicos').innerText = p.servicos || '-';
-      document.getElementById('profPublico').innerText = p.publico || '-';
-      document.getElementById('profModalidade').innerText = p.modalidade || '-';
-      document.getElementById('profPeriodos').innerText = p.periodos;
-
-      const fotoContainer = document.getElementById('profFotoContainer');
-      if (p.foto) {
-        fotoContainer.innerHTML = `<img src="${p.foto}" alt="${p.nome}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\\'fa-solid fa-user\\'></i>';">`;
-      } else {
-        fotoContainer.innerHTML = `<i class="fa-solid fa-user"></i>`;
-      }
-
-      const contatosContainer = document.getElementById('profContatos');
-      contatosContainer.innerHTML = '';
-
-      if (p.whatsapp) {
-        contatosContainer.innerHTML += `
-          <a href="https://wa.me/55${p.whatsapp}" target="_blank" class="contact-btn btn-whatsapp">
-            <i class="fa-brands fa-whatsapp"></i> WhatsApp
-          </a>`;
-      }
-      if (p.email) {
-        contatosContainer.innerHTML += `
-          <a href="mailto:${p.email}" class="contact-btn btn-email">
-            <i class="fa-solid fa-envelope"></i> E-mail
-          </a>`;
-      }
-      if (p.instagram) {
-        contatosContainer.innerHTML += `
-          <a href="https://instagram.com/${p.instagram}" target="_blank" class="contact-btn btn-instagram">
-            <i class="fa-brands fa-instagram"></i> Instagram
-          </a>`;
-      }
-    }
-
-    function filtrarProfissionais() {
-      const esp = document.getElementById('selectEspecialidade').value;
-      const cid = document.getElementById('selectCidade').value;
+    function aplicarFiltros() {
+      const prof = document.getElementById('selectProfissao').value.toLowerCase();
+      const cid = document.getElementById('selectCidade').value.toLowerCase();
+      const esp = document.getElementById('selectEspecialidade').value.toLowerCase();
+      const srv = document.getElementById('inputServicos').value.toLowerCase();
 
       const filtrados = listaCompleta.filter(p => {
-        const matchEsp = !esp || p.especialidade.toLowerCase().includes(esp.toLowerCase());
-        const matchCid = !cid || p.cidade.toLowerCase() === cid.toLowerCase();
-        return matchEsp && matchCid;
+        const matchProf = !prof || p.profissao.toLowerCase().includes(prof);
+        const matchCid = !cid || p.cidade.toLowerCase().includes(cid);
+        const matchEsp = !esp || p.especialidade.toLowerCase().includes(esp);
+        const matchSrv = !srv || p.servicos.toLowerCase().includes(srv) || p.bio.toLowerCase().includes(srv);
+
+        return matchProf && matchCid && matchEsp && matchSrv;
       });
 
-      renderizarLista(filtrados);
-      if (filtrados.length > 0) {
-        exibirDetalhes(filtrados[0]);
-      }
+      renderizarCards(filtrados);
     }
 
     function limparFiltros() {
-      document.getElementById('selectEspecialidade').value = '';
+      document.getElementById('selectProfissao').value = '';
       document.getElementById('selectCidade').value = '';
-      renderizarLista(listaCompleta);
-      if (listaCompleta.length > 0) {
-        exibirDetalhes(listaCompleta[0]);
-      }
+      document.getElementById('selectEspecialidade').value = '';
+      document.getElementById('inputServicos').value = '';
+      renderizarCards(listaCompleta);
     }
 
     window.onload = carregarDados;
