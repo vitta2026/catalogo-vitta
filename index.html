@@ -23,7 +23,7 @@
       --text-muted: #6c757d;
       --border: #e2e8f0;
       --radius: 16px;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,17 +33,44 @@
       background-color: var(--bg);
       color: var(--text-main);
       line-height: 1.5;
-      padding: 16px; /* Borda externa da página */
+      padding: 20px;
     }
 
-    /* Moldura / Borda da Página */
+    /* Moldura Profissional e Elegante */
     .page-frame {
-      background: var(--bg);
-      border: 3px solid var(--primary);
-      border-radius: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-top: 5px solid var(--primary); /* Borda superior corporativa */
+      border-radius: 16px;
       padding-bottom: 40px;
       overflow: hidden;
-      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      box-shadow: var(--shadow);
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* Topbar com Data e Saudação */
+    .top-bar {
+      background: #fafbfd;
+      border-bottom: 1px solid var(--border);
+      padding: 8px 24px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    .top-bar-date {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .top-bar-greeting {
+      font-weight: 700;
+      color: var(--primary);
     }
 
     header {
@@ -53,8 +80,6 @@
     }
 
     .header-container {
-      max-width: 1200px;
-      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -87,7 +112,7 @@
       gap: 6px;
     }
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .container { padding: 0 24px; }
 
     /* Hero Banner */
     .hero {
@@ -100,6 +125,7 @@
 
     @media (max-width: 768px) {
       .hero { grid-template-columns: 1fr; text-align: center; }
+      .top-bar { flex-direction: column; gap: 4px; text-align: center; }
     }
 
     .hero-title {
@@ -144,10 +170,10 @@
 
     /* Filter Card */
     .filter-card {
-      background: var(--card-bg);
+      background: #f8fafc;
+      border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 24px;
-      box-shadow: var(--shadow);
       margin-bottom: 32px;
     }
 
@@ -185,7 +211,7 @@
       padding: 12px 12px 12px 38px;
       border: 1px solid var(--border);
       border-radius: 10px;
-      background-color: #f8fafc;
+      background-color: #ffffff;
       font-size: 0.9rem;
       color: var(--text-main);
       outline: none;
@@ -288,7 +314,7 @@
       width: 290px;
       background: var(--card-bg);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
       padding: 24px;
       display: flex;
       flex-direction: column;
@@ -303,7 +329,7 @@
 
     .prof-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.1);
       border-color: var(--primary);
     }
 
@@ -533,6 +559,16 @@
 <body>
 
   <div class="page-frame">
+    
+    <!-- Topbar com Saudação e Data em Fuso do Brasil -->
+    <div class="top-bar">
+      <div class="top-bar-greeting" id="textoSaudacao">Boa noite</div>
+      <div class="top-bar-date">
+        <i class="fa-regular fa-calendar-days"></i>
+        <span id="textoData">25 de agosto de 2026</span>
+      </div>
+    </div>
+
     <header>
       <div class="header-container">
         <div class="brand">
@@ -567,7 +603,6 @@
       <div class="filter-card">
         <div class="filter-grid">
           
-          <!-- 1. Profissão -->
           <div class="filter-group">
             <label>1. Profissão</label>
             <div class="filter-input-wrapper">
@@ -578,7 +613,6 @@
             </div>
           </div>
 
-          <!-- 2. Cidade -->
           <div class="filter-group">
             <label>2. Cidade</label>
             <div class="filter-input-wrapper">
@@ -589,7 +623,6 @@
             </div>
           </div>
 
-          <!-- 3. Especialidade -->
           <div class="filter-group">
             <label>3. Especialidade</label>
             <div class="filter-input-wrapper">
@@ -600,7 +633,6 @@
             </div>
           </div>
 
-          <!-- 4. Serviços (Busca aberta) -->
           <div class="filter-group">
             <label>4. Serviços Prestados</label>
             <div class="filter-input-wrapper">
@@ -609,7 +641,6 @@
             </div>
           </div>
 
-          <!-- Botões de Ação -->
           <div style="display: flex; flex-direction: column;">
             <button class="btn-search" onclick="aplicarFiltros()">
               <i class="fa-solid fa-magnifying-glass"></i> Buscar
@@ -697,6 +728,29 @@
   </div>
 
   <script>
+    // Função para atualizar data e saudação dinâmica (Fuso Horário Brasil)
+    function atualizarDataESaudacao() {
+      const agora = new Date();
+      
+      // Ajustar para o fuso horário de Brasília
+      const opcoesData = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Sao_Paulo' };
+      const dataFormatada = agora.toLocaleDateString('pt-BR', opcoesData);
+      document.getElementById('textoData').innerText = dataFormatada;
+
+      // Obter hora atual em Brasília
+      const horaStr = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', hour12: false, timeZone: 'America/Sao_Paulo' });
+      const hora = parseInt(horaStr, 10);
+
+      let saudacao = 'Boa noite';
+      if (hora >= 5 && hora < 12) {
+        saudacao = 'Bom dia';
+      } else if (hora >= 12 && hora < 18) {
+        saudacao = 'Boa tarde';
+      }
+
+      document.getElementById('textoSaudacao').innerText = saudacao;
+    }
+
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQRSLkWdYOqO25SuyaGCdvfxKvoPXMRsWs9WBQ22Q_G64-DnHWdyWKEUbkbm8LirCKb0yZRT_Le-j5Q/pub?gid=1879601222&single=true&output=csv';
 
     let listaCompleta = [];
@@ -773,6 +827,7 @@
     }
 
     async function carregarDados() {
+      atualizarDataESaudacao();
       try {
         const response = await fetch(CSV_URL);
         const data = await response.text();
@@ -823,21 +878,18 @@
         return;
       }
 
-      profissionais.forEach((p, idx) => {
+      profissionais.forEach((p) => {
         const card = document.createElement('div');
         card.className = 'prof-card';
         card.onclick = () => abrirModal(p);
 
-        // Avatar
         const avatarHTML = p.foto 
           ? `<img src="${p.foto}" alt="${p.nome}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\\'fa-solid fa-user\\'></i>';">`
           : `<i class="fa-solid fa-user"></i>`;
 
-        // Tags de Serviços
         const tagsArr = p.servicos ? p.servicos.split(',').slice(0, 2) : [];
         const tagsHTML = tagsArr.map(t => `<span class="prof-tag">${t.trim()}</span>`).join('');
 
-        // Botões de Contato
         let contatosHTML = '';
         if (p.whatsapp) {
           contatosHTML += `<a href="https://wa.me/55${p.whatsapp}" target="_blank" onclick="event.stopPropagation();" class="btn-icon btn-wsp" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>`;
@@ -921,7 +973,6 @@
       document.getElementById('modalResumo').classList.remove('active');
     }
 
-    // Fechar modal ao clicar fora do card
     window.onclick = function(event) {
       const modal = document.getElementById('modalResumo');
       if (event.target === modal) {
