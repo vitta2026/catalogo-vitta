@@ -49,7 +49,7 @@
       margin: 0 auto;
     }
 
-    /* Topbar com Data e Saudação */
+    /* Topbar */
     .top-bar {
       background: #fafbfd;
       border-bottom: 1px solid var(--border);
@@ -87,7 +87,6 @@
 
     .brand { display: flex; align-items: center; gap: 12px; }
     
-    /* Logo da Rede Vitta */
     .brand-logo-img {
       max-height: 50px;
       width: auto;
@@ -123,7 +122,7 @@
 
     .container { padding: 0 24px; }
 
-    /* Hero Banner com Imagem Personalizada */
+    /* Hero Banner com Imagem Redonda */
     .hero {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -162,14 +161,14 @@
       align-items: center;
     }
 
-    /* Ajustado para exibir a arte do hero completa */
+    /* MOLDURA REDONDA PARA O BANNER */
     .hero-banner-img {
-      max-width: 100%;
-      max-height: 280px;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      border-radius: 16px;
+      width: 260px;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 8px 24px rgba(92, 36, 131, 0.15);
+      border: 4px solid #ffffff;
     }
 
     /* Filter Card */
@@ -550,7 +549,7 @@
 
   <div class="page-frame">
     
-    <!-- Topbar com Data e Saudação -->
+    <!-- Topbar -->
     <div class="top-bar">
       <div class="top-bar-greeting" id="textoSaudacao">Boa noite</div>
       <div class="top-bar-date">
@@ -562,7 +561,6 @@
     <header>
       <div class="header-container">
         <div class="brand">
-          <!-- LOGO REDE VITTA COM CAMINHO COMPATÍVEL -->
           <img src="logo-rede-vitta.png" alt="Logo Rede Vitta" class="brand-logo-img"
                onerror="this.src='./logo-rede-vitta.png'; this.onerror=function(){ this.style.display='none'; document.getElementById('logoFallback').style.display='flex'; };">
           <div class="brand-logo-fallback" id="logoFallback" style="display: none;">
@@ -581,14 +579,13 @@
 
     <div class="container">
       
-      <!-- HERO BANNER -->
+      <!-- HERO BANNER COM IMAGEM REDONDA -->
       <div class="hero">
         <div>
           <h1 class="hero-title">Catálogo de<br><span>Profissionais</span></h1>
           <p class="hero-subtitle">Busque, conecte e transforme sua saúde e bem-estar com os melhores especialistas.</p>
         </div>
         <div class="hero-image-container">
-          <!-- IMAGEM HERO COMPLETA -->
           <img src="hero-profissional.png" alt="Profissional da Saúde" class="hero-banner-img"
                onerror="this.src='./hero-profissional.png'; this.onerror=null;">
         </div>
@@ -747,11 +744,12 @@
 
     let listaCompleta = [];
 
+    // URL otimizada para ser pública no Drive
     function formatarUrlDrive(url) {
       if (!url) return '';
       const match = url.match(/id=([a-zA-Z0-9_-]+)/) || url.match(/\/d\/([a-zA-Z0-9_-]+)/);
       if (match && match[1]) {
-        return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w400`;
+        return `https://lh3.googleusercontent.com/d/${match[1]}`;
       }
       return url;
     }
