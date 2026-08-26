@@ -778,7 +778,7 @@
     <!-- Topbar Roxa Escura -->
     <div class="top-bar">
       <div class="top-bar-greeting">
-        👋 <span id="textoSaudacao">Boa noite!</span>
+         <span id="textoSaudacao">Boa noite!</span>
       </div>
       <div class="top-bar-date">
         <i class="fa-regular fa-calendar"></i>
@@ -871,7 +871,7 @@
         <div class="filter-grid">
           
           <div class="filter-group">
-            <label>1. Profissão</label>
+            <label>Profissão</label>
             <div class="filter-input-wrapper">
               <i class="fa-solid fa-user-doctor"></i>
               <select id="selectProfissao" onchange="aplicarFiltros()">
@@ -881,7 +881,7 @@
           </div>
 
           <div class="filter-group">
-            <label>2. Cidade</label>
+            <label>Cidade</label>
             <div class="filter-input-wrapper">
               <i class="fa-solid fa-location-dot"></i>
               <select id="selectCidade" onchange="aplicarFiltros()">
@@ -891,7 +891,7 @@
           </div>
 
           <div class="filter-group">
-            <label>3. Especialidade</label>
+            <label>Especialidade</label>
             <div class="filter-input-wrapper">
               <i class="fa-solid fa-stethoscope"></i>
               <select id="selectEspecialidade" onchange="aplicarFiltros()">
@@ -901,7 +901,7 @@
           </div>
 
           <div class="filter-group">
-            <label>4. Serviços Prestados</label>
+            <label>Serviços Prestados</label>
             <div class="filter-input-wrapper">
               <i class="fa-solid fa-magnifying-glass"></i>
               <input type="text" id="inputServicos" placeholder="Ex: Consulta, Pré-natal..." oninput="aplicarFiltros()">
@@ -1025,6 +1025,20 @@
 
     let listaCompleta = [];
 
+    // Padroniza apenas a exibição dos textos:
+    // "MÉDICO", "médico" e "Médico" -> "Médico"
+    function padronizarTexto(texto) {
+      if (!texto) return '';
+
+      return texto
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/(^|\\s)([a-zá-úà-üç])/gi, (match, espaco, letra) => {
+          return espaco + letra.toUpperCase();
+        });
+    }
+
     function formatarUrlDrive(url) {
       if (!url) return '';
       const match = url.match(/id=([a-zA-Z0-9_-]+)/) || url.match(/\/d\/([a-zA-Z0-9_-]+)/);
@@ -1129,9 +1143,9 @@
         }
       });
 
-      profissoes.forEach(prof => selectProf.innerHTML += `<option value="${prof}">${prof}</option>`);
-      cidades.forEach(cid => selectCid.innerHTML += `<option value="${cid}">${cid}</option>`);
-      especialidades.forEach(esp => selectEsp.innerHTML += `<option value="${esp}">${esp}</option>`);
+      profissoes.forEach(prof => selectProf.innerHTML += `<option value="${prof}">${padronizarTexto(prof)}</option>`);
+      cidades.forEach(cid => selectCid.innerHTML += `<option value="${cid}">${padronizarTexto(cid)}</option>`);
+      especialidades.forEach(esp => selectEsp.innerHTML += `<option value="${esp}">${padronizarTexto(esp)}</option>`);
     }
 
     function renderizarCards(profissionais) {
@@ -1158,16 +1172,16 @@
           : `<i class="fa-solid fa-user"></i>`;
 
         const tagsArr = p.servicos ? p.servicos.split(',').slice(0, 2) : [];
-        const tagsHTML = tagsArr.map(t => `<span class="prof-tag">${t.trim()}</span>`).join('');
+        const tagsHTML = tagsArr.map(t => `<span class="prof-tag">${padronizarTexto(t)}</span>`).join('');
 
         card.innerHTML = `
           <i class="fa-regular fa-heart prof-fav"></i>
           <div class="prof-avatar">${avatarHTML}</div>
           <div class="prof-body">
             <div class="prof-name" title="${p.nome}">${p.nome}</div>
-            <div class="prof-profession">${p.profissao}</div>
-            ${p.especialidade ? `<div class="prof-spec">${p.especialidade}</div>` : ''}
-            <div class="prof-location"><i class="fa-solid fa-location-dot"></i> ${p.cidade || 'Itapevi'}</div>
+            <div class="prof-profession">${padronizarTexto(p.profissao)}</div>
+            ${p.especialidade ? `<div class="prof-spec">${padronizarTexto(p.especialidade)}</div>` : ''}
+            <div class="prof-location"><i class="fa-solid fa-location-dot"></i> ${padronizarTexto(p.cidade) || 'Itapevi'}</div>
             <div class="prof-tags">${tagsHTML}</div>
             <div class="prof-hours"><i class="fa-regular fa-clock"></i> ${p.periodos}</div>
           </div>
