@@ -1034,7 +1034,7 @@
         .toString()
         .trim()
         .toLowerCase()
-        .replace(/(^|\\s)([a-zá-úà-üç])/gi, (match, espaco, letra) => {
+        .replace(/(^|\s)([a-zá-úà-üç])/gi, (match, espaco, letra) => {
           return espaco + letra.toUpperCase();
         });
     }
@@ -1136,16 +1136,26 @@
       const especialidades = new Set();
 
       listaCompleta.forEach(p => {
-        if (p.profissao) profissoes.add(p.profissao);
-        if (p.cidade) cidades.add(p.cidade);
+        if (p.profissao) profissoes.add(padronizarTexto(p.profissao));
+        if (p.cidade) cidades.add(padronizarTexto(p.cidade));
         if (p.especialidade) {
-          p.especialidade.split(',').forEach(e => especialidades.add(e.trim()));
+          p.especialidade.split(',').forEach(e => {
+            if (e.trim()) especialidades.add(padronizarTexto(e.trim()));
+          });
         }
       });
 
-      profissoes.forEach(prof => selectProf.innerHTML += `<option value="${prof}">${padronizarTexto(prof)}</option>`);
-      cidades.forEach(cid => selectCid.innerHTML += `<option value="${cid}">${padronizarTexto(cid)}</option>`);
-      especialidades.forEach(esp => selectEsp.innerHTML += `<option value="${esp}">${padronizarTexto(esp)}</option>`);
+      Array.from(profissoes).sort().forEach(prof => {
+        selectProf.innerHTML += `<option value="${prof}">${prof}</option>`;
+      });
+
+      Array.from(cidades).sort().forEach(cid => {
+        selectCid.innerHTML += `<option value="${cid}">${cid}</option>`;
+      });
+
+      Array.from(especialidades).sort().forEach(esp => {
+        selectEsp.innerHTML += `<option value="${esp}">${esp}</option>`;
+      });
     }
 
     function renderizarCards(profissionais) {
@@ -1168,7 +1178,7 @@
         card.onclick = () => abrirModal(p);
 
         const avatarHTML = p.foto 
-          ? `<img src="${p.foto}" alt="${p.nome}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\\'fa-solid fa-user\\'></i>';">`
+          ? `<img src="${p.foto}" alt="${p.nome}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fa-solid fa-user\'></i>';">`
           : `<i class="fa-solid fa-user"></i>`;
 
         const tagsArr = p.servicos ? p.servicos.split(',').slice(0, 2) : [];
@@ -1225,7 +1235,7 @@
 
       const fotoContainer = document.getElementById('modalFotoContainer');
       if (p.foto) {
-        fotoContainer.innerHTML = `<img src="${p.foto}" alt="${p.nome}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\\'fa-solid fa-user\\'></i>';">`;
+        fotoContainer.innerHTML = `<img src="${p.foto}" alt="${p.nome}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fa-solid fa-user\'></i>';">`;
       } else {
         fotoContainer.innerHTML = `<i class="fa-solid fa-user"></i>`;
       }
@@ -1296,3 +1306,5 @@
   </script>
 </body>
 </html>
+index.html
+Exibindo index.html.
