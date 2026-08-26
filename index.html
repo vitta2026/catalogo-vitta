@@ -40,7 +40,7 @@
     .page-frame {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-top: 5px solid var(--primary); /* Borda superior corporativa */
+      border-top: 5px solid var(--primary);
       border-radius: 16px;
       padding-bottom: 40px;
       overflow: hidden;
@@ -158,6 +158,10 @@
       border-radius: 50%;
       background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
       padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
     
     .hero-avatar-main img {
@@ -166,6 +170,19 @@
       border-radius: 50%;
       object-fit: cover;
       background: #fff;
+    }
+
+    /* Fallback visual para o hero avatar caso a imagem falhe */
+    .hero-avatar-fallback {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: var(--primary);
     }
 
     /* Filter Card */
@@ -201,21 +218,30 @@
 
     .filter-input-wrapper i {
       position: absolute;
-      left: 14px;
+      left: 12px;
       color: var(--primary);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      pointer-events: none;
+      z-index: 1;
     }
 
     .filter-group select, .filter-group input {
       width: 100%;
-      padding: 12px 12px 12px 38px;
+      padding: 10px 10px 10px 34px;
       border: 1px solid var(--border);
       border-radius: 10px;
       background-color: #ffffff;
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       color: var(--text-main);
       outline: none;
       transition: all 0.2s;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .filter-group select:focus, .filter-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(92, 36, 131, 0.1);
     }
 
     .btn-search {
@@ -230,6 +256,10 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+    }
+
+    .btn-search:hover {
+      opacity: 0.9;
     }
 
     .btn-reset {
@@ -586,20 +616,25 @@
 
     <div class="container">
       
-      <!-- Banner Hero -->
+      <!-- Banner Hero com tratamento de erro de imagem -->
       <div class="hero">
         <div>
           <h1 class="hero-title">Catálogo de<br><span>Profissionais</span></h1>
           <p class="hero-subtitle">Busque, conecte e transforme sua saúde e bem-estar com os melhores especialistas.</p>
         </div>
         <div class="hero-image-container">
-          <div class="hero-avatar-main">
-            <img src="https://images.unsplash.com/photo-1594824813566-78a9a441e8e2?auto=format&fit=crop&q=80&w=400" alt="Profissional da Saúde">
+          <div class="hero-avatar-main" id="heroAvatarBox">
+            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=80" 
+                 alt="Profissional de Saúde" 
+                 onerror="this.style.display='none'; document.getElementById('heroFallback').style.display='flex';">
+            <div class="hero-avatar-fallback" id="heroFallback" style="display: none;">
+              <i class="fa-solid fa-user-doctor"></i>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Filtros -->
+      <!-- Filtros com campos sem corte de texto -->
       <div class="filter-card">
         <div class="filter-grid">
           
@@ -732,12 +767,10 @@
     function atualizarDataESaudacao() {
       const agora = new Date();
       
-      // Ajustar para o fuso horário de Brasília
       const opcoesData = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Sao_Paulo' };
       const dataFormatada = agora.toLocaleDateString('pt-BR', opcoesData);
       document.getElementById('textoData').innerText = dataFormatada;
 
-      // Obter hora atual em Brasília
       const horaStr = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', hour12: false, timeZone: 'America/Sao_Paulo' });
       const hora = parseInt(horaStr, 10);
 
