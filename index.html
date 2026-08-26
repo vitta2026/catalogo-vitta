@@ -13,8 +13,8 @@
   <style>
     :root {
       --primary: #5c2483;
-      --primary-dark: #3f165c;
-      --primary-light: #7b32ad;
+      --primary-dark: #4d1b70;
+      --primary-light: #f3e8ff;
       --secondary: #00a896;
       --secondary-light: #e6f7f5;
       --bg: #f4f6f9;
@@ -33,7 +33,7 @@
       background-color: var(--bg);
       color: var(--text-main);
       line-height: 1.5;
-      padding: 0 0 40px 0;
+      padding-bottom: 40px;
     }
 
     /* Moldura Principal */
@@ -47,11 +47,11 @@
       margin: 0 auto;
     }
 
-    /* Topbar Roxa Escura (conforme Modelo 2) */
+    /* Topbar Roxa Escura */
     .top-bar {
-      background: #4d1b70;
+      background: var(--primary-dark);
       color: #ffffff;
-      padding: 10px 28px;
+      padding: 10px 36px;
       font-size: 0.85rem;
       display: flex;
       justify-content: space-between;
@@ -59,23 +59,13 @@
       font-weight: 600;
     }
 
-    .top-bar-date {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      opacity: 0.9;
-    }
-
-    .top-bar-greeting {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .top-bar-greeting { display: flex; align-items: center; gap: 6px; }
+    .top-bar-date { display: flex; align-items: center; gap: 6px; opacity: 0.95; }
 
     /* Header */
     header {
       background: var(--card-bg);
-      padding: 20px 28px;
+      padding: 24px 36px;
     }
 
     .header-container {
@@ -93,24 +83,24 @@
     }
     
     .brand-logo-fallback {
-      background: #f3e8ff;
+      background: var(--primary-light);
       color: var(--primary);
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
     
-    .brand-title { font-size: 1.35rem; font-weight: 800; color: var(--primary); line-height: 1.1; }
-    .brand-subtitle { font-size: 0.8rem; color: var(--secondary); font-weight: 700; }
+    .brand-title { font-size: 1.4rem; font-weight: 800; color: var(--primary); line-height: 1.1; }
+    .brand-subtitle { font-size: 0.82rem; color: var(--secondary); font-weight: 700; }
 
     .badge-location {
       background-color: var(--secondary-light);
       color: var(--secondary);
-      padding: 8px 16px;
+      padding: 8px 18px;
       border-radius: 20px;
       font-size: 0.85rem;
       font-weight: 700;
@@ -119,138 +109,248 @@
       gap: 6px;
     }
 
-    .container { padding: 0 28px; }
+    .container { padding: 0 36px; }
 
-    /* Hero Banner Reformulado */
+    /* HERO BANNER - Idêntico à imagem de referência */
     .hero {
+      position: relative;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.15fr 0.85fr;
       align-items: center;
-      padding: 20px 0 35px 0;
+      padding: 20px 0 40px 0;
       gap: 20px;
+      background: radial-gradient(circle at 90% 50%, #e0f2fe 0%, #f3e8ff 35%, transparent 70%);
+      border-radius: 24px;
+      margin-bottom: -15px;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .hero { grid-template-columns: 1fr; text-align: center; }
       .hero-features { justify-content: center; }
     }
 
+    .hero-content {
+      padding-right: 15px;
+      z-index: 2;
+    }
+
     .hero-title {
-      font-size: 2.5rem;
+      font-size: 2.75rem;
       font-weight: 800;
       color: var(--primary);
-      line-height: 1.15;
-      margin-bottom: 12px;
+      line-height: 1.12;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
     }
 
     .hero-title span {
       color: var(--secondary);
+      display: block;
     }
 
     .hero-subtitle {
       font-size: 0.95rem;
       color: var(--text-muted);
       max-width: 480px;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
+      line-height: 1.5;
     }
 
-    /* Ícones de Recursos do Modelo 2 */
+    /* Ícones de Benefícios (Lado a Lado) */
     .hero-features {
       display: flex;
-      gap: 20px;
+      gap: 24px;
       flex-wrap: wrap;
     }
 
     .feature-item {
       display: flex;
-      align-items: center;
-      gap: 10px;
+      align-items: flex-start;
+      gap: 12px;
     }
 
     .feature-icon {
-      width: 38px;
-      height: 38px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      background: #f3e8ff;
-      color: var(--primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.95rem;
+      font-size: 1rem;
       flex-shrink: 0;
     }
 
+    .feature-icon.purple { background: #f3e8ff; color: var(--primary); }
+    .feature-icon.teal { background: #e6f7f5; color: var(--secondary); }
+    .feature-icon.lavender { background: #ede9fe; color: #7c3aed; }
+
     .feature-text h4 {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--primary);
-      line-height: 1.2;
+      line-height: 1.25;
     }
 
     .feature-text p {
-      font-size: 0.73rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
+      margin-top: 2px;
     }
 
-    .hero-image-container {
+    /* Área Gráfica da Médica + Elementos Flutuantes */
+    .hero-graphics-container {
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
+      z-index: 1;
+      min-height: 360px;
+    }
+
+    /* Círculo Principal e Anéis de Fundo */
+    .hero-circle-bg {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(243,232,255,0.6) 100%);
+      border: 8px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 20px 40px rgba(92, 36, 131, 0.08);
+      z-index: 1;
     }
 
     .hero-banner-img {
-      max-width: 100%;
+      position: relative;
+      z-index: 2;
+      max-width: 340px;
       height: auto;
-      max-height: 320px;
       object-fit: contain;
     }
 
-    /* Filter Card Atualizado */
+    /* Ícones Flutuantes em Volta da Médica */
+    .floating-badge {
+      position: absolute;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      z-index: 3;
+    }
+
+    .badge-chat {
+      top: 15%;
+      left: 10%;
+      width: 46px;
+      height: 46px;
+      background: #8b5cf6;
+      font-size: 1.1rem;
+    }
+
+    .badge-pulse {
+      top: 10%;
+      right: 12%;
+      width: 48px;
+      height: 48px;
+      background: #7c3aed;
+      font-size: 1.2rem;
+    }
+
+    .badge-heart {
+      bottom: 8%;
+      left: 12%;
+      width: 58px;
+      height: 58px;
+      background: #00a896;
+      font-size: 1.4rem;
+    }
+
+    .badge-leaf {
+      bottom: 30%;
+      right: 5%;
+      width: 50px;
+      height: 50px;
+      background: #ffffff;
+      color: #00a896;
+      border: 2px solid #e6f7f5;
+      font-size: 1.3rem;
+    }
+
+    .badge-plus {
+      top: 5%;
+      left: 42%;
+      width: 26px;
+      height: 26px;
+      background: #c084fc;
+      font-size: 0.75rem;
+    }
+
+    /* Pattern de Pontos */
+    .dots-pattern {
+      position: absolute;
+      top: 35%;
+      left: 2%;
+      width: 60px;
+      height: 60px;
+      background-image: radial-gradient(#cbd5e1 2px, transparent 2px);
+      background-size: 10px 10px;
+      opacity: 0.6;
+      z-index: 0;
+    }
+
+    /* Card de Filtros Reformulado com Borda Teal Lateral */
     .filter-card {
+      position: relative;
       background: #ffffff;
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      margin-bottom: 32px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      border-left: 6px solid var(--secondary); /* Detalhe verde teal da imagem */
+      border-radius: 18px;
+      padding: 24px 28px;
+      margin-top: 10px;
+      margin-bottom: 36px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      z-index: 5;
     }
 
     .filter-card-header {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 18px;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .filter-card-header i {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       color: var(--primary);
+      margin-top: 2px;
     }
 
     .filter-card-title h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
+      font-size: 1.1rem;
+      font-weight: 800;
       color: var(--primary);
     }
 
     .filter-card-title p {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
+      margin-top: 2px;
     }
 
     .filter-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr) auto;
-      gap: 14px;
+      grid-template-columns: repeat(4, 1fr) 180px;
+      gap: 16px;
       align-items: end;
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1100px) {
       .filter-grid { grid-template-columns: repeat(2, 1fr); }
       .filter-actions { grid-column: span 2; }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       .filter-grid { grid-template-columns: 1fr; }
       .filter-actions { grid-column: span 1; }
     }
@@ -258,10 +358,10 @@
     .filter-group { display: flex; flex-direction: column; gap: 6px; }
     .filter-group label {
       font-size: 0.72rem;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.5px;
     }
 
     .filter-input-wrapper {
@@ -272,20 +372,20 @@
 
     .filter-input-wrapper i {
       position: absolute;
-      left: 12px;
+      left: 14px;
       color: var(--primary);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       pointer-events: none;
       z-index: 1;
     }
 
     .filter-group select, .filter-group input {
       width: 100%;
-      padding: 10px 10px 10px 34px;
+      padding: 11px 12px 11px 38px;
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       background-color: #fafbfd;
-      font-size: 0.82rem;
+      font-size: 0.83rem;
       color: var(--text-main);
       outline: none;
       transition: all 0.2s;
@@ -303,17 +403,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .btn-search {
       background-color: var(--secondary);
       color: white;
       border: none;
-      padding: 11px 24px;
+      padding: 12px 20px;
       border-radius: 10px;
       font-weight: 700;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -323,7 +423,7 @@
       transition: all 0.2s;
     }
 
-    .btn-search:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-search:hover { opacity: 0.92; transform: translateY(-1px); }
 
     .btn-reset {
       background: transparent;
@@ -334,17 +434,17 @@
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
     }
 
     .btn-reset:hover { text-decoration: underline; }
 
-    /* Results Header & Controls */
+    /* Controles & Resultados */
     .results-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .results-title-group {
@@ -354,10 +454,10 @@
     }
 
     .results-icon {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      background: #f3e8ff;
+      background: var(--primary-light);
       color: var(--primary);
       display: flex;
       align-items: center;
@@ -368,7 +468,7 @@
     .results-count {
       font-weight: 800;
       color: var(--primary);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       line-height: 1.2;
     }
 
@@ -377,14 +477,11 @@
       color: var(--text-muted);
     }
 
-    .carousel-controls {
-      display: flex;
-      gap: 8px;
-    }
+    .carousel-controls { display: flex; gap: 8px; }
 
     .btn-nav {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       border: 1px solid var(--border);
       background: var(--card-bg);
@@ -403,7 +500,7 @@
       border-color: var(--primary);
     }
 
-    /* Slider / Carrossel Horizontal */
+    /* Carrossel Horizontal */
     .cards-slider-container {
       overflow-x: auto;
       scroll-behavior: smooth;
@@ -424,7 +521,7 @@
       width: max-content;
     }
 
-    /* Card de Profissional Reformulado (Estilo Horizontal Modelo 2) */
+    /* Cards de Profissional */
     .prof-card {
       width: 350px;
       background: var(--card-bg);
@@ -499,15 +596,10 @@
       margin-bottom: 8px;
     }
 
-    .prof-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-bottom: 8px;
-    }
+    .prof-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
 
     .prof-tag {
-      background: #f3e8ff;
+      background: var(--primary-light);
       color: var(--primary);
       font-size: 0.68rem;
       padding: 3px 8px;
@@ -524,7 +616,7 @@
       gap: 4px;
     }
 
-    /* Card Dica de Bem-Estar (Modelo 2) */
+    /* Card Dica de Bem-Estar */
     .card-tip {
       width: 240px;
       background: #f8f4ff;
@@ -536,13 +628,7 @@
       flex-shrink: 0;
     }
 
-    .tip-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
+    .tip-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
     .tip-icon {
       width: 32px;
       height: 32px;
@@ -556,13 +642,7 @@
     }
 
     .tip-title { font-size: 0.85rem; font-weight: 700; color: var(--primary); }
-
-    .tip-text {
-      font-size: 0.78rem;
-      color: #555;
-      line-height: 1.4;
-      margin-bottom: 16px;
-    }
+    .tip-text { font-size: 0.78rem; color: #555; line-height: 1.4; margin-bottom: 16px; }
 
     .btn-tip {
       background-color: var(--primary);
@@ -579,7 +659,7 @@
 
     .btn-tip:hover { background-color: var(--primary-dark); }
 
-    /* Modal / Popup */
+    /* Modal Pop-up */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -613,8 +693,7 @@
 
     .modal-close {
       position: absolute;
-      top: 14px;
-      right: 18px;
+      top: 14px; right: 18px;
       background: transparent;
       border: none;
       font-size: 1.5rem;
@@ -696,14 +775,14 @@
 
   <div class="page-frame">
     
-    <!-- Topbar Roxa (Modelo 2) -->
+    <!-- Topbar Roxa Escura -->
     <div class="top-bar">
       <div class="top-bar-greeting">
         👋 <span id="textoSaudacao">Boa noite!</span>
       </div>
       <div class="top-bar-date">
         <i class="fa-regular fa-calendar"></i>
-        <span id="textoData">--</span>
+        <span id="textoData">25 de agosto de 2026</span>
       </div>
     </div>
 
@@ -729,15 +808,15 @@
 
     <div class="container">
       
-      <!-- HERO BANNER (Modelo 2) -->
+      <!-- HERO BANNER (Modelo Exato da Imagem) -->
       <div class="hero">
-        <div>
-          <h1 class="hero-title">Encontre o profissional<br><span>ideal para você</span></h1>
+        <div class="hero-content">
+          <h1 class="hero-title">Encontre o profissional<span>ideal para você</span></h1>
           <p class="hero-subtitle">Conecte-se com especialistas qualificados e cuide da sua saúde e bem-estar com quem entende do assunto.</p>
           
           <div class="hero-features">
             <div class="feature-item">
-              <div class="feature-icon"><i class="fa-solid fa-user-group"></i></div>
+              <div class="feature-icon purple"><i class="fa-solid fa-user-group"></i></div>
               <div class="feature-text">
                 <h4>Profissionais<br>qualificados</h4>
                 <p>Especialistas<br>verificados</p>
@@ -745,7 +824,7 @@
             </div>
 
             <div class="feature-item">
-              <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+              <div class="feature-icon teal"><i class="fa-solid fa-shield-halved"></i></div>
               <div class="feature-text">
                 <h4>Segurança e<br>confiança</h4>
                 <p>Ambiente seguro<br>e acolhedor</p>
@@ -753,7 +832,7 @@
             </div>
 
             <div class="feature-item">
-              <div class="feature-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+              <div class="feature-icon lavender"><i class="fa-solid fa-heart-pulse"></i></div>
               <div class="feature-text">
                 <h4>Saúde e<br>bem-estar</h4>
                 <p>Cuidado integral<br>para sua vida</p>
@@ -762,13 +841,24 @@
           </div>
         </div>
 
-        <div class="hero-image-container">
+        <!-- Médica com Círculo e Ícones Flutuantes Decorativos -->
+        <div class="hero-graphics-container">
+          <div class="dots-pattern"></div>
+          <div class="hero-circle-bg"></div>
+
+          <!-- Ícones Flutuantes -->
+          <div class="floating-badge badge-chat"><i class="fa-solid fa-comment-dots"></i></div>
+          <div class="floating-badge badge-pulse"><i class="fa-solid fa-heart-pulse"></i></div>
+          <div class="floating-badge badge-heart"><i class="fa-solid fa-heart"></i></div>
+          <div class="floating-badge badge-leaf"><i class="fa-solid fa-briefcase-medical"></i></div>
+          <div class="floating-badge badge-plus"><i class="fa-solid fa-plus"></i></div>
+
           <img src="hero-profissional.png" alt="Profissional da Saúde" class="hero-banner-img"
                onerror="this.src='./hero-profissional.png'; this.onerror=null;">
         </div>
       </div>
 
-      <!-- Filtros Reformulados (Modelo 2) -->
+      <!-- CARD DE FILTROS (Com barra verde lateral teal igual à imagem) -->
       <div class="filter-card">
         <div class="filter-card-header">
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -830,7 +920,7 @@
         </div>
       </div>
 
-      <!-- Cabeçalho de Resultados (Modelo 2) -->
+      <!-- Cabeçalho de Resultados -->
       <div class="results-header">
         <div class="results-title-group">
           <div class="results-icon"><i class="fa-solid fa-users"></i></div>
@@ -845,7 +935,7 @@
         </div>
       </div>
 
-      <!-- Carrossel -->
+      <!-- Carrossel de Profissionais -->
       <div class="cards-slider-container" id="sliderContainer">
         <div class="cards-grid" id="gridProfissionais">
           <div style="color: var(--text-muted); padding: 20px;">
@@ -1086,7 +1176,7 @@
         grid.appendChild(card);
       });
 
-      // ADICIONA O CARD "DICA DE BEM-ESTAR" AO FINAL DO CARROSSEL (CONFORME MODELO 2)
+      // Card Dica de Bem-Estar
       const tipCard = document.createElement('div');
       tipCard.className = 'card-tip';
       tipCard.innerHTML = `
