@@ -40,7 +40,7 @@
     .page-frame {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-top: 5px solid var(--primary);
+      border-top: 5px solid var(--primary); /* Borda superior corporativa */
       border-radius: 16px;
       padding-bottom: 40px;
       overflow: hidden;
@@ -114,7 +114,7 @@
 
     .container { padding: 0 24px; }
 
-    /* Hero Banner com Imagem Circular */
+    /* Hero Banner */
     .hero {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -153,16 +153,11 @@
     }
 
     .hero-avatar-main {
-      width: 190px;
-      height: 190px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
       padding: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(92, 36, 131, 0.15);
     }
     
     .hero-avatar-main img {
@@ -171,18 +166,6 @@
       border-radius: 50%;
       object-fit: cover;
       background: #fff;
-    }
-
-    .hero-avatar-fallback {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4.5rem;
-      color: var(--primary);
     }
 
     /* Filter Card */
@@ -218,30 +201,21 @@
 
     .filter-input-wrapper i {
       position: absolute;
-      left: 12px;
+      left: 14px;
       color: var(--primary);
-      font-size: 0.85rem;
-      pointer-events: none;
-      z-index: 1;
+      font-size: 0.9rem;
     }
 
     .filter-group select, .filter-group input {
       width: 100%;
-      padding: 10px 10px 10px 34px;
+      padding: 12px 12px 12px 38px;
       border: 1px solid var(--border);
       border-radius: 10px;
       background-color: #ffffff;
-      font-size: 0.82rem;
+      font-size: 0.9rem;
       color: var(--text-main);
       outline: none;
       transition: all 0.2s;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .filter-group select:focus, .filter-group input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(92, 36, 131, 0.1);
     }
 
     .btn-search {
@@ -257,8 +231,6 @@
       justify-content: center;
       gap: 8px;
     }
-
-    .btn-search:hover { opacity: 0.9; }
 
     .btn-reset {
       background: transparent;
@@ -322,7 +294,10 @@
       scrollbar-color: var(--primary) transparent;
     }
 
-    .cards-slider-container::-webkit-scrollbar { height: 6px; }
+    .cards-slider-container::-webkit-scrollbar {
+      height: 6px;
+    }
+
     .cards-slider-container::-webkit-scrollbar-thumb {
       background-color: var(--primary);
       border-radius: 10px;
@@ -383,9 +358,26 @@
     .prof-avatar img { width: 100%; height: 100%; object-fit: cover; }
     .prof-avatar i { font-size: 2.2rem; color: #94a3b8; }
 
-    .prof-name { font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 2px; }
-    .prof-profession { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; }
-    .prof-spec { font-size: 0.8rem; color: var(--secondary); font-weight: 600; margin-bottom: 6px; }
+    .prof-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .prof-profession {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .prof-spec {
+      font-size: 0.8rem;
+      color: var(--secondary);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
 
     .prof-location {
       font-size: 0.78rem;
@@ -461,7 +453,10 @@
       padding: 20px;
     }
 
-    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
 
     .modal-card {
       background: #fff;
@@ -476,7 +471,9 @@
       position: relative;
     }
 
-    @media (max-width: 700px) { .modal-card { grid-template-columns: 1fr; } }
+    @media (max-width: 700px) {
+      .modal-card { grid-template-columns: 1fr; }
+    }
 
     .modal-close {
       position: absolute;
@@ -589,7 +586,7 @@
 
     <div class="container">
       
-      <!-- Hero Banner configurado para a imagem local do seu projeto -->
+      <!-- Banner Hero -->
       <div class="hero">
         <div>
           <h1 class="hero-title">Catálogo de<br><span>Profissionais</span></h1>
@@ -597,13 +594,7 @@
         </div>
         <div class="hero-image-container">
           <div class="hero-avatar-main">
-            <!-- COLOQUE O CAMINHO OU NOME DA SUA IMAGEM LOCAL ABAIXO (Ex: "hero.png" ou "img/banner.jpg") -->
-            <img src="caminho/para/sua-imagem.png" 
-                 alt="Profissional da Saúde" 
-                 onerror="this.style.display='none'; document.getElementById('heroFallback').style.display='flex';">
-            <div class="hero-avatar-fallback" id="heroFallback" style="display: none;">
-              <i class="fa-solid fa-user-doctor"></i>
-            </div>
+            <img src="https://images.unsplash.com/photo-1594824813566-78a9a441e8e2?auto=format&fit=crop&q=80&w=400" alt="Profissional da Saúde">
           </div>
         </div>
       </div>
@@ -662,7 +653,7 @@
         </div>
       </div>
 
-      <!-- Cabeçalho do Carrossel -->
+      <!-- Cabeçalho do Carrossel e Controles -->
       <div class="results-header">
         <div class="results-count" id="contadorResultados">Profissionais encontrados (0)</div>
         <div class="carousel-controls">
@@ -671,7 +662,7 @@
         </div>
       </div>
 
-      <!-- Carrossel -->
+      <!-- Carrossel de Cards com Scroll Horizontal -->
       <div class="cards-slider-container" id="sliderContainer">
         <div class="cards-grid" id="gridProfissionais">
           <div style="color: var(--text-muted); padding: 20px;">
@@ -683,7 +674,7 @@
     </div>
   </div>
 
-  <!-- Modal Pop-up -->
+  <!-- Modal Pop-up de Resumo Detalhado -->
   <div class="modal-overlay" id="modalResumo">
     <div class="modal-card">
       <button class="modal-close" onclick="fecharModal()">&times;</button>
@@ -737,13 +728,16 @@
   </div>
 
   <script>
+    // Função para atualizar data e saudação dinâmica (Fuso Horário Brasil)
     function atualizarDataESaudacao() {
       const agora = new Date();
       
+      // Ajustar para o fuso horário de Brasília
       const opcoesData = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Sao_Paulo' };
       const dataFormatada = agora.toLocaleDateString('pt-BR', opcoesData);
       document.getElementById('textoData').innerText = dataFormatada;
 
+      // Obter hora atual em Brasília
       const horaStr = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', hour12: false, timeZone: 'America/Sao_Paulo' });
       const hora = parseInt(horaStr, 10);
 
