@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo de Profissionais - Rede Vitta</title>
-  
+  <title>Catálogo de Profissionais</title>
+
+  <!-- Fontes e Ícones -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,1104 +13,670 @@
 
   <style>
     :root {
-      --primary: #5c2483;
-      --primary-dark: #4d1b70;
-      --primary-light: #f3e8ff;
-      --secondary: #00a896;
-      --secondary-light: #e6f7f5;
-      --bg: #f4f6f9;
-      --card-bg: #ffffff;
-      --text-main: #2b2d42;
-      --text-muted: #6c757d;
-      --border: #e2e8f0;
-      --radius: 16px;
-      --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+      --primary: #4F46E5;
+      --primary-hover: #4338CA;
+      --primary-light: #EEF2FF;
+      --bg: #F8FAFC;
+      --surface: #FFFFFF;
+      --text: #0F172A;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
 
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--bg);
-      color: var(--text-main);
+      color: var(--text);
       line-height: 1.5;
-      padding-bottom: 40px;
+      padding-bottom: 60px;
     }
 
-    /* Moldura Principal */
-    .page-frame {
-      background: var(--card-bg);
-      border-radius: 0 0 16px 16px;
-      padding-bottom: 40px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      max-width: 1280px;
-      margin: 0 auto;
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 30px 20px;
+      text-align: center;
+      margin-bottom: 30px;
     }
 
-    /* Topbar Roxa Escura */
-    .top-bar {
-      background: var(--primary-dark);
-      color: #ffffff;
-      padding: 10px 36px;
-      font-size: 0.85rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 600;
-    }
-
-    .top-bar-greeting { display: flex; align-items: center; gap: 6px; }
-    .top-bar-date { display: flex; align-items: center; gap: 6px; opacity: 0.95; }
-
-    /* Header */
-    header {
-      background: var(--card-bg);
-      padding: 24px 36px;
-    }
-
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand { display: flex; align-items: center; gap: 12px; }
-    
-    .brand-logo-img {
-      max-height: 48px;
-      width: auto;
-      object-fit: contain;
-    }
-    
-    .brand-logo-fallback {
-      background: var(--primary-light);
-      color: var(--primary);
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-    }
-    
-    .brand-title { font-size: 1.4rem; font-weight: 800; color: var(--primary); line-height: 1.1; }
-    .brand-subtitle { font-size: 0.82rem; color: var(--secondary); font-weight: 700; }
-
-    .badge-location {
-      background-color: var(--secondary-light);
-      color: var(--secondary);
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .container { padding: 0 36px; }
-
-    /* HERO BANNER - Idêntico à imagem de referência */
-    .hero {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      align-items: center;
-      padding: 20px 0 40px 0;
-      gap: 20px;
-      background: radial-gradient(circle at 90% 50%, #e0f2fe 0%, #f3e8ff 35%, transparent 70%);
-      border-radius: 24px;
-      margin-bottom: -15px;
-    }
-
-    @media (max-width: 960px) {
-      .hero { grid-template-columns: 1fr; text-align: center; }
-      .hero-features { justify-content: center; }
-    }
-
-    .hero-content {
-      padding-right: 15px;
-      z-index: 2;
-    }
-
-    .hero-title {
-      font-size: 2.75rem;
+    .header h1 {
+      font-size: 2rem;
       font-weight: 800;
       color: var(--primary);
-      line-height: 1.12;
-      margin-bottom: 14px;
-      letter-spacing: -0.5px;
+      margin-bottom: 8px;
     }
 
-    .hero-title span {
-      color: var(--secondary);
-      display: block;
-    }
-
-    .hero-subtitle {
-      font-size: 0.95rem;
+    .header p {
       color: var(--text-muted);
-      max-width: 480px;
-      margin-bottom: 32px;
-      line-height: 1.5;
-    }
-
-    /* Ícones de Benefícios (Lado a Lado) */
-    .hero-features {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .feature-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .feature-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-size: 1rem;
-      flex-shrink: 0;
     }
 
-    .feature-icon.purple { background: #f3e8ff; color: var(--primary); }
-    .feature-icon.teal { background: #e6f7f5; color: var(--secondary); }
-    .feature-icon.lavender { background: #ede9fe; color: #7c3aed; }
-
-    .feature-text h4 {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--primary);
-      line-height: 1.25;
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
 
-    .feature-text p {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    /* Área Gráfica da Médica + Elementos Flutuantes */
-    .hero-graphics-container {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1;
-      min-height: 360px;
-    }
-
-    /* Círculo Principal e Anéis de Fundo */
-    .hero-circle-bg {
-      position: absolute;
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(243,232,255,0.6) 100%);
-      border: 8px solid rgba(255, 255, 255, 0.8);
-      box-shadow: 0 20px 40px rgba(92, 36, 131, 0.08);
-      z-index: 1;
-    }
-
-    .hero-banner-img {
-      position: relative;
-      z-index: 2;
-      max-width: 340px;
-      height: auto;
-      object-fit: contain;
-    }
-
-    /* Ícones Flutuantes em Volta da Médica */
-    .floating-badge {
-      position: absolute;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-      z-index: 3;
-    }
-
-    .badge-chat {
-      top: 15%;
-      left: 10%;
-      width: 46px;
-      height: 46px;
-      background: #8b5cf6;
-      font-size: 1.1rem;
-    }
-
-    .badge-pulse {
-      top: 10%;
-      right: 12%;
-      width: 48px;
-      height: 48px;
-      background: #7c3aed;
-      font-size: 1.2rem;
-    }
-
-    .badge-heart {
-      bottom: 8%;
-      left: 12%;
-      width: 58px;
-      height: 58px;
-      background: #00a896;
-      font-size: 1.4rem;
-    }
-
-    .badge-leaf {
-      bottom: 30%;
-      right: 5%;
-      width: 50px;
-      height: 50px;
-      background: #ffffff;
-      color: #00a896;
-      border: 2px solid #e6f7f5;
-      font-size: 1.3rem;
-    }
-
-    .badge-plus {
-      top: 5%;
-      left: 42%;
-      width: 26px;
-      height: 26px;
-      background: #c084fc;
-      font-size: 0.75rem;
-    }
-
-    /* Pattern de Pontos */
-    .dots-pattern {
-      position: absolute;
-      top: 35%;
-      left: 2%;
-      width: 60px;
-      height: 60px;
-      background-image: radial-gradient(#cbd5e1 2px, transparent 2px);
-      background-size: 10px 10px;
-      opacity: 0.6;
-      z-index: 0;
-    }
-
-    /* Card de Filtros Reformulado com Borda Teal Lateral */
+    /* FILTROS */
     .filter-card {
-      position: relative;
-      background: #ffffff;
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
       border: 1px solid var(--border);
-      border-left: 6px solid var(--secondary); /* Detalhe verde teal da imagem */
-      border-radius: 18px;
-      padding: 24px 28px;
-      margin-top: 10px;
-      margin-bottom: 36px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-      z-index: 5;
-    }
-
-    .filter-card-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .filter-card-header i {
-      font-size: 1.4rem;
-      color: var(--primary);
-      margin-top: 2px;
-    }
-
-    .filter-card-title h3 {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--primary);
-    }
-
-    .filter-card-title p {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 2px;
+      margin-bottom: 40px;
     }
 
     .filter-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr) 180px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
-      align-items: end;
+      margin-bottom: 20px;
     }
 
-    @media (max-width: 1100px) {
-      .filter-grid { grid-template-columns: repeat(2, 1fr); }
-      .filter-actions { grid-column: span 2; }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
-    @media (max-width: 640px) {
-      .filter-grid { grid-template-columns: 1fr; }
-      .filter-actions { grid-column: span 1; }
-    }
-
-    .filter-group { display: flex; flex-direction: column; gap: 6px; }
-    .filter-group label {
-      font-size: 0.72rem;
-      font-weight: 800;
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    .filter-input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .filter-input-wrapper i {
-      position: absolute;
-      left: 14px;
-      color: var(--primary);
-      font-size: 0.9rem;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .filter-group select, .filter-group input {
+    .form-control {
       width: 100%;
-      padding: 11px 12px 11px 38px;
+      padding: 10px 14px;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      background-color: #fafbfd;
-      font-size: 0.83rem;
-      color: var(--text-main);
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      background-color: var(--bg);
+      color: var(--text);
       outline: none;
       transition: all 0.2s;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
-    .filter-group select:focus, .filter-group input:focus {
+    .form-control:focus {
       border-color: var(--primary);
-      background-color: #ffffff;
-      box-shadow: 0 0 0 3px rgba(92, 36, 131, 0.1);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+      background-color: var(--surface);
     }
 
     .filter-actions {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
+      gap: 12px;
+      justify-content: flex-end;
     }
 
-    .btn-search {
-      background-color: var(--secondary);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      transition: all 0.2s;
-    }
-
-    .btn-search:hover { opacity: 0.92; transform: translateY(-1px); }
-
-    .btn-reset {
-      background: transparent;
-      border: none;
-      color: var(--primary);
-      font-size: 0.78rem;
+    .btn {
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
       font-weight: 600;
+      font-size: 0.95rem;
       cursor: pointer;
+      border: none;
+      transition: all 0.2s;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 8px;
     }
 
-    .btn-reset:hover { text-decoration: underline; }
-
-    /* Controles & Resultados */
-    .results-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-
-    .results-title-group {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .results-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--primary-light);
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-    }
-
-    .results-count {
-      font-weight: 800;
-      color: var(--primary);
-      font-size: 1.15rem;
-      line-height: 1.2;
-    }
-
-    .results-subtitle {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .carousel-controls { display: flex; gap: 8px; }
-
-    .btn-nav {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: var(--card-bg);
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-    }
-
-    .btn-nav:hover {
+    .btn-primary {
       background: var(--primary);
       color: white;
-      border-color: var(--primary);
     }
 
-    /* Carrossel Horizontal */
-    .cards-slider-container {
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      padding: 10px 4px 20px 4px;
-      scrollbar-width: thin;
-      scrollbar-color: var(--primary) transparent;
+    .btn-primary:hover {
+      background: var(--primary-hover);
     }
 
-    .cards-slider-container::-webkit-scrollbar { height: 6px; }
-    .cards-slider-container::-webkit-scrollbar-thumb {
-      background-color: var(--primary);
-      border-radius: 10px;
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
     }
 
-    .cards-grid {
+    .btn-secondary:hover {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* CARROSSEL DE DESTAQUES */
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .carousel-container {
       display: flex;
       gap: 16px;
-      width: max-content;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 10px 5px;
+      scrollbar-width: none;
     }
 
-    /* Cards de Profissional */
-    .prof-card {
-      width: 350px;
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-      padding: 18px;
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+    .carousel-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--surface);
       border: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-
-    .prof-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 25px -5px rgba(0, 0, 0, 0.08);
-      border-color: var(--primary);
-    }
-
-    .prof-fav {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      color: #94a3b8;
-      font-size: 1rem;
-      transition: color 0.2s;
-    }
-
-    .prof-fav:hover { color: #e11d48; }
-
-    .prof-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      overflow: hidden;
-      background: #f1f5f9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid #f8fafc;
-      flex-shrink: 0;
-    }
-
-    .prof-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .prof-avatar i { font-size: 2rem; color: #94a3b8; }
-
-    .prof-body { display: flex; flex-direction: column; flex-grow: 1; min-width: 0; }
-
-    .prof-name { 
-      font-size: 0.98rem; 
-      font-weight: 700; 
-      color: var(--primary); 
-      margin-bottom: 2px;
-      padding-right: 18px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .prof-profession { font-size: 0.78rem; font-weight: 500; color: var(--text-muted); }
-    .prof-spec { font-size: 0.78rem; color: var(--secondary); font-weight: 700; margin-bottom: 6px; }
-
-    .prof-location {
-      font-size: 0.74rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-bottom: 8px;
-    }
-
-    .prof-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
-
-    .prof-tag {
-      background: var(--primary-light);
-      color: var(--primary);
-      font-size: 0.68rem;
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .prof-hours {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    /* Card Dica de Bem-Estar */
-    .card-tip {
-      width: 240px;
-      background: #f8f4ff;
-      border: 1px solid #e9d8fd;
-      border-radius: var(--radius);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-    }
-
-    .tip-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-    .tip-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--primary);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-    }
-
-    .tip-title { font-size: 0.85rem; font-weight: 700; color: var(--primary); }
-    .tip-text { font-size: 0.78rem; color: #555; line-height: 1.4; margin-bottom: 16px; }
-
-    .btn-tip {
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 0.78rem;
-      font-weight: 700;
+      box-shadow: var(--shadow-md);
       cursor: pointer;
-      margin-top: auto;
-      align-self: flex-start;
-    }
-
-    .btn-tip:hover { background-color: var(--primary-dark); }
-
-    /* Modal Pop-up */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      padding: 20px;
-    }
-
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-
-    .modal-card {
-      background: #fff;
-      border-radius: var(--radius);
-      width: 100%;
-      max-width: 850px;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      position: relative;
-    }
-
-    @media (max-width: 700px) { .modal-card { grid-template-columns: 1fr; } }
-
-    .modal-close {
-      position: absolute;
-      top: 14px; right: 18px;
-      background: transparent;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--text-muted);
       z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
     }
 
-    .profile-sidebar {
-      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white;
-      padding: 30px 20px;
+    .carousel-btn.prev { left: -20px; }
+    .carousel-btn.next { right: -20px; }
+
+    /* CARDS */
+    .grid-profissionais {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .prof-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
     }
 
-    .profile-avatar-large {
-      width: 130px;
-      height: 130px;
+    .prof-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-light);
+    }
+
+    .prof-card.carousel-item {
+      min-width: 250px;
+      max-width: 250px;
+      flex-shrink: 0;
+    }
+
+    .prof-fav {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .prof-fav:hover, .prof-fav.fa-solid {
+      color: #EF4444;
+    }
+
+    .prof-avatar {
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
-      border: 4px solid rgba(255, 255, 255, 0.2);
-      background-color: #eceff1;
+      background: var(--primary-light);
+      color: var(--primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
+      font-size: 2rem;
+      margin-bottom: 14px;
+      overflow: hidden;
+      border: 2px solid var(--border);
+    }
+
+    .prof-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .prof-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    .prof-profession {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .prof-spec {
+      font-size: 0.8rem;
       color: var(--text-muted);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    .prof-location {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+
+    .prof-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .prof-tag {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .prof-hours {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border-top: 1px dashed var(--border);
+      width: 100%;
+      padding-top: 8px;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 30px;
+      position: relative;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--bg);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+
+    .modal-header {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .modal-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      flex-shrink: 0;
       overflow: hidden;
     }
 
-    .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
-
-    .profile-register {
-      background: rgba(255, 255, 255, 0.2);
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-top: 10px;
+    .modal-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .profile-info { padding: 30px; display: flex; flex-direction: column; gap: 16px; }
+    .modal-title-area h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
 
-    .info-section h3 {
-      font-size: 0.8rem;
+    .modal-reg {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .modal-section {
+      margin-bottom: 20px;
+    }
+
+    .modal-section h4 {
+      font-size: 0.9rem;
+      color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--secondary);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+    }
+
+    .modal-section p {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .modal-contacts {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 8px;
     }
 
-    .info-section p { font-size: 0.92rem; color: var(--text-main); }
-
-    .contact-links { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
-    .contact-btn {
-      padding: 10px 16px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: white;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-whatsapp-modal { background-color: #25d366; }
-    .btn-email-modal { background-color: #ea4335; }
-    .btn-instagram-modal { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .btn-whatsapp-modal { background: #25D366; color: white; }
+    .btn-email-modal { background: var(--primary-light); color: var(--primary); }
+    .btn-instagram-modal { background: #E1306C; color: white; }
   </style>
 </head>
 <body>
 
-  <div class="page-frame">
+  <header class="header">
+    <h1>Encontre Profissionais</h1>
+    <p>Conecte-se com especialistas da sua região</p>
+  </header>
+
+  <div class="container">
     
-    <!-- Topbar Roxa Escura -->
-    <div class="top-bar">
-      <div class="top-bar-greeting">
-        <span id="textoSaudacao">Boa noite!</span>
+    <!-- ÁREA DE FILTROS -->
+    <div class="filter-card">
+      <div class="filter-grid">
+        <div class="form-group">
+          <label>Profissão</label>
+          <select id="selectProfissao" class="form-control">
+            <option value="">Todas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Cidade</label>
+          <select id="selectCidade" class="form-control">
+            <option value="">Todas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Especialidade</label>
+          <select id="selectEspecialidade" class="form-control">
+            <option value="">Todas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Serviços / Palavra-chave</label>
+          <input type="text" id="inputServicos" class="form-control" placeholder="Ex: Fisioterapia, Exames...">
+        </div>
       </div>
-      <div class="top-bar-date">
-        <i class="fa-regular fa-calendar"></i>
-        <span id="textoData">25 de agosto de 2026</span>
+      <div class="filter-actions">
+        <button class="btn btn-secondary" onclick="limparFiltros()">Limpar</button>
+        <button class="btn btn-primary" onclick="aplicarFiltros()"><i class="fa-solid fa-magnifying-glass"></i> Filtrar</button>
       </div>
     </div>
 
-    <!-- Header -->
-    <header>
-      <div class="header-container">
-        <div class="brand">
-          <img src="logo-rede-vitta.png" alt="Logo Rede Vitta" class="brand-logo-img"
-               onerror="this.src='./logo-rede-vitta.png'; this.onerror=function(){ this.style.display='none'; document.getElementById('logoFallback').style.display='flex'; };">
-          <div class="brand-logo-fallback" id="logoFallback" style="display: none;">
-            <i class="fa-solid fa-hospital-user"></i>
-          </div>
-          <div>
-            <div class="brand-title">Rede Vitta</div>
-            <div class="brand-subtitle">Coworking Saúde</div>
-          </div>
-        </div>
-        <div class="badge-location">
-          <i class="fa-solid fa-location-dot"></i> Itapevi e Região
-        </div>
-      </div>
-    </header>
-
-    <div class="container">
-      
-      <!-- HERO BANNER (Modelo Exato da Imagem) -->
-      <div class="hero">
-        <div class="hero-content">
-          <h1 class="hero-title">Encontre o profissional<span>ideal para você</span></h1>
-          <p class="hero-subtitle">Conecte-se com especialistas qualificados e cuide da sua saúde e bem-estar com quem entende do assunto.</p>
-          
-          <div class="hero-features">
-            <div class="feature-item">
-              <div class="feature-icon purple"><i class="fa-solid fa-user-group"></i></div>
-              <div class="feature-text">
-                <h4>Profissionais<br>qualificados</h4>
-                <p>Especialistas<br>verificados</p>
-              </div>
-            </div>
-
-            <div class="feature-item">
-              <div class="feature-icon teal"><i class="fa-solid fa-shield-halved"></i></div>
-              <div class="feature-text">
-                <h4>Segurança e<br>confiança</h4>
-                <p>Ambiente seguro<br>e acolhedor</p>
-              </div>
-            </div>
-
-            <div class="feature-item">
-              <div class="feature-icon lavender"><i class="fa-solid fa-heart-pulse"></i></div>
-              <div class="feature-text">
-                <h4>Saúde e<br>bem-estar</h4>
-                <p>Cuidado integral<br>para sua vida</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Médica com Círculo e Ícones Flutuantes Decorativos -->
-        <div class="hero-graphics-container">
-          <div class="dots-pattern"></div>
-          <div class="hero-circle-bg"></div>
-
-          <!-- Ícones Flutuantes -->
-          <div class="floating-badge badge-chat"><i class="fa-solid fa-comment-dots"></i></div>
-          <div class="floating-badge badge-pulse"><i class="fa-solid fa-heart-pulse"></i></div>
-          <div class="floating-badge badge-heart"><i class="fa-solid fa-heart"></i></div>
-          <div class="floating-badge badge-leaf"><i class="fa-solid fa-briefcase-medical"></i></div>
-          <div class="floating-badge badge-plus"><i class="fa-solid fa-plus"></i></div>
-
-          <img src="hero-profissional.png" alt="Profissional da Saúde" class="hero-banner-img"
-               onerror="this.src='./hero-profissional.png'; this.onerror=null;">
-        </div>
-      </div>
-
-      <!-- CARD DE FILTROS (Com barra verde lateral teal igual à imagem) -->
-      <div class="filter-card">
-        <div class="filter-card-header">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <div class="filter-card-title">
-            <h3>Encontre o especialista ideal</h3>
-            <p>Use os filtros abaixo para encontrar o profissional ideal para suas necessidades.</p>
-          </div>
-        </div>
-
-        <div class="filter-grid">
-          
-          <div class="filter-group">
-            <label>1. Profissão</label>
-            <div class="filter-input-wrapper">
-              <i class="fa-solid fa-user-doctor"></i>
-              <select id="selectProfissao" onchange="aplicarFiltros()">
-                <option value="">Todas as Profissões</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="filter-group">
-            <label>2. Cidade</label>
-            <div class="filter-input-wrapper">
-              <i class="fa-solid fa-location-dot"></i>
-              <select id="selectCidade" onchange="aplicarFiltros()">
-                <option value="">Todas as Cidades</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="filter-group">
-            <label>3. Especialidade</label>
-            <div class="filter-input-wrapper">
-              <i class="fa-solid fa-stethoscope"></i>
-              <select id="selectEspecialidade" onchange="aplicarFiltros()">
-                <option value="">Todas as Especialidades</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="filter-group">
-            <label>4. Serviços Prestados</label>
-            <div class="filter-input-wrapper">
-              <i class="fa-solid fa-magnifying-glass"></i>
-              <input type="text" id="inputServicos" placeholder="Ex: Consulta, Pré-natal..." oninput="aplicarFiltros()">
-            </div>
-          </div>
-
-          <div class="filter-actions">
-            <button class="btn-search" onclick="aplicarFiltros()">
-              <i class="fa-solid fa-magnifying-glass"></i> Buscar
-            </button>
-            <button class="btn-reset" onclick="limparFiltros()">
-              <i class="fa-solid fa-rotate-left"></i> Limpar filtros
-            </button>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Cabeçalho de Resultados -->
-      <div class="results-header">
-        <div class="results-title-group">
-          <div class="results-icon"><i class="fa-solid fa-users"></i></div>
-          <div>
-            <div class="results-count" id="contadorResultados">Profissionais encontrados (0)</div>
-            <div class="results-subtitle">Conheça os especialistas disponíveis.</div>
-          </div>
-        </div>
-        <div class="carousel-controls">
-          <button class="btn-nav" onclick="scrollCarrossel(-360)" title="Rolar para esquerda"><i class="fa-solid fa-chevron-left"></i></button>
-          <button class="btn-nav" onclick="scrollCarrossel(360)" title="Rolar para direita"><i class="fa-solid fa-chevron-right"></i></button>
-        </div>
-      </div>
-
-      <!-- Carrossel de Profissionais -->
-      <div class="cards-slider-container" id="sliderContainer">
-        <div class="cards-grid" id="gridProfissionais">
-          <div style="color: var(--text-muted); padding: 20px;">
-            Carregando profissionais...
-          </div>
-        </div>
-      </div>
-
+    <!-- CARROSSEL DE DESTAQUES -->
+    <div class="section-title">
+      <span>Destaques da Semana</span>
     </div>
+    <div class="carousel-wrapper">
+      <button class="carousel-btn prev" onclick="scrollCarrossel(-280)"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="carousel-container" id="sliderContainer">
+        <!-- Cards do carrossel injetados via JS -->
+      </div>
+      <button class="carousel-btn next" onclick="scrollCarrossel(280)"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <!-- LISTAGEM PRINCIPAL -->
+    <div class="section-title">
+      <span id="contadorResultados">Todos os Profissionais</span>
+    </div>
+    <div class="grid-profissionais" id="gridProfissionais">
+      <!-- Cards normais injetados via JS -->
+    </div>
+
   </div>
 
-  <!-- Modal Pop-up -->
+  <!-- MODAL DE DETALHES -->
   <div class="modal-overlay" id="modalResumo">
     <div class="modal-card">
-      <button class="modal-close" onclick="fecharModal()">&times;</button>
+      <button class="modal-close" onclick="fecharModal()"><i class="fa-solid fa-xmark"></i></button>
       
-      <div class="profile-sidebar">
-        <div class="profile-avatar-large" id="modalFotoContainer">
+      <div class="modal-header">
+        <div class="modal-avatar" id="modalFotoContainer">
           <i class="fa-solid fa-user"></i>
         </div>
-        <h2 id="modalNome" style="font-size: 1.2rem;">Nome do Profissional</h2>
-        <div class="profile-register" id="modalRegistro">Reg: --</div>
-      </div>
-
-      <div class="profile-info">
-        <div class="info-section">
-          <h3><i class="fa-solid fa-align-left"></i> Mini Biografia</h3>
-          <p id="modalBio">-</p>
-        </div>
-
-        <div class="info-section">
-          <h3><i class="fa-solid fa-stethoscope"></i> Especialidades</h3>
-          <p id="modalEspecialidades">-</p>
-        </div>
-
-        <div class="info-section">
-          <h3><i class="fa-solid fa-hand-holding-medical"></i> Serviços Prestados</h3>
-          <p id="modalServicos">-</p>
-        </div>
-
-        <div class="info-section">
-          <h3><i class="fa-solid fa-users"></i> Público-alvo</h3>
-          <p id="modalPublico">-</p>
-        </div>
-
-        <div class="info-section">
-          <h3><i class="fa-solid fa-laptop-house"></i> Modalidade de Atendimento</h3>
-          <p id="modalModalidade">-</p>
-        </div>
-
-        <div class="info-section">
-          <h3><i class="fa-solid fa-clock"></i> Período de Atendimento</h3>
-          <p id="modalPeriodos">-</p>
-        </div>
-
-        <div class="info-section">
-          <h3><i class="fa-solid fa-address-book"></i> Contato</h3>
-          <div class="contact-links" id="modalContatos"></div>
+        <div class="modal-title-area">
+          <h2 id="modalNome">Nome do Profissional</h2>
+          <span class="modal-reg" id="modalRegistro">Reg: ---</span>
         </div>
       </div>
 
+      <div class="modal-section">
+        <h4>Biografia / Apresentação</h4>
+        <p id="modalBio">Sem informações.</p>
+      </div>
+
+      <div class="modal-section">
+        <h4>Especialidade(s)</h4>
+        <p id="modalEspecialidades">-</p>
+      </div>
+
+      <div class="modal-section">
+        <h4>Serviços Pretendidos / Oferecidos</h4>
+        <p id="modalServicos">-</p>
+      </div>
+
+      <div class="modal-section">
+        <h4>Público Alvo</h4>
+        <p id="modalPublico">-</p>
+      </div>
+
+      <div class="modal-section">
+        <h4>Modalidade de Atendimento</h4>
+        <p id="modalModalidade">-</p>
+      </div>
+
+      <div class="modal-section">
+        <h4>Períodos de Atendimento</h4>
+        <p id="modalPeriodos">-</p>
+      </div>
+
+      <div class="modal-contacts" id="modalContatos">
+        <!-- Botões de contato dinâmicos -->
+      </div>
     </div>
   </div>
-
   <script>
-    function atualizarDataESaudacao() {
-      const agora = new Date();
-      
-      const opcoesData = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Sao_Paulo' };
-      const dataFormatada = agora.toLocaleDateString('pt-BR', opcoesData);
-      document.getElementById('textoData').innerText = dataFormatada;
-
-      const horaStr = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', hour12: false, timeZone: 'America/Sao_Paulo' });
-      const hora = parseInt(horaStr, 10);
-
-      let saudacao = 'Boa noite!';
-      if (hora >= 5 && hora < 12) {
-        saudacao = 'Bom dia!';
-      } else if (hora >= 12 && hora < 18) {
-        saudacao = 'Boa tarde!';
-      }
-
-      document.getElementById('textoSaudacao').innerText = saudacao;
-    }
-
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQRSLkWdYOqO25SuyaGCdvfxKvoPXMRsWs9WBQ22Q_G64-DnHWdyWKEUbkbm8LirCKb0yZRT_Le-j5Q/pub?gid=1879601222&single=true&output=csv';
+    const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRsK54K2aKnd4ZfK8-s6r5wM2u-PZ-LgJ2R9v_W5w/pub?output=csv';
 
     let listaCompleta = [];
 
-    function formatarUrlDrive(url) {
-      if (!url) return '';
-      const match = url.match(/id=([a-zA-Z0-9_-]+)/) || url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      if (match && match[1]) {
-        return `https://lh3.googleusercontent.com/d/${match[1]}`;
+    async function carregarDados() {
+      try {
+        // Dados de fallback para testes caso a URL falhe
+        const fallbackData = [
+          {
+            nome: "Dra. Ana Silva",
+            profissao: "Psicóloga",
+            especialidade: "Terapia Cognitivo-Comportamental",
+            servicos: "Ansiedade, Depressão, Autoestima",
+            cidade: "São Paulo",
+            modalidade: "Online / Presencial",
+            periodos: "Manhã e Tarde",
+            bio: "Psicóloga clínica com mais de 8 anos de experiência no acompanhamento de adultos e adolescentes.",
+            whatsapp: "11999999999",
+            email: "ana.silva@email.com",
+            instagram: "dra.anasilva",
+            registro: "CRP 06/123456",
+            publico: "Adultos e Adolescentes",
+            destaque: true
+          },
+          {
+            nome: "Dr. Carlos Eduardo",
+            profissao: "Fisioterapeuta",
+            especialidade: "Fisioterapia Esportiva",
+            servicos: "Reabilitação, Liberação Miofascial",
+            cidade: "Itapevi",
+            modalidade: "Presencial",
+            periodos: "Tarde e Noite",
+            bio: "Especialista em recuperação de lesões musculares e articulares.",
+            whatsapp: "11988888888",
+            email: "carlos.fisio@email.com",
+            instagram: "carlos.fisio",
+            registro: "CREFITO 12345",
+            publico: "Atletas e Adultos",
+            destaque: true
+          }
+        ];
+
+        try {
+          const response = await fetch(GOOGLE_SHEET_CSV_URL);
+          if (response.ok) {
+            const csvText = await response.text();
+            listaCompleta = parseCSV(csvText);
+          } else {
+            listaCompleta = fallbackData;
+          }
+        } catch (e) {
+          console.warn('Erro ao carregar CSV remoto, usando dados de exemplo.', e);
+          listaCompleta = fallbackData;
+        }
+
+        preencherFiltros();
+        renderizarDestaques();
+        renderizarCards(listaCompleta);
+
+      } catch (err) {
+        console.error("Erro ao inicializar:", err);
       }
-      return url;
     }
 
     function parseCSV(text) {
-      const p = textLine => {
-        let arr = [''], i = 0, c = false;
-        for (let ch of textLine) {
-          if (ch === '"') { c = !c; }
-          else if (ch === ',' && !c) { arr.push(''); i++; }
-          else { arr[i] += ch; }
-        }
-        return arr;
-      };
+      const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+      if (lines.length < 2) return [];
 
-      const lines = text.split(/\r?\n/);
-      const result = [];
+      const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim().toLowerCase());
+      
+      return lines.slice(1).map(line => {
+        const values = line.split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/).map(val => val.replace(/^"|"$/g, '').trim());
+        let obj = {};
+        headers.forEach((h, i) => {
+          obj[h] = values[i] || '';
+        });
 
-      for (let i = 1; i < lines.length; i++) {
-        if (!lines[i].trim()) continue;
-        const cols = p(lines[i]).map(c => c.replace(/^"|"$/g, '').trim());
-
-        if (cols.length >= 2) {
-          let fotoUrl = '';
-          cols.forEach(c => {
-            if (c.includes('drive.google.com')) {
-              fotoUrl = c;
-            }
-          });
-
-          const segAsex = cols[13] || cols[12] || '';
-          const sabado = cols[14] || '';
-          const domingo = cols[15] || '';
-
-          let periodosList = [];
-          if (segAsex && segAsex.toUpperCase() !== 'N/A' && !segAsex.includes('drive.google.com')) {
-            periodosList.push(`Seg a Sex: ${segAsex}`);
-          }
-          if (sabado && sabado.toUpperCase() !== 'N/A') {
-            periodosList.push(`Sáb: ${sabado}`);
-          }
-          if (domingo && domingo.toUpperCase() !== 'N/A') {
-            periodosList.push(`Dom/Fer: ${domingo}`);
-          }
-
-          result.push({
-            nome: cols[1] || '',
-            cidade: cols[2] || '',
-            profissao: cols[3] || 'Profissional da Saúde',
-            especialidade: cols[3] || '',
-            servicos: cols[4] || '',
-            registro: cols[5] || '',
-            bio: cols[6] || '',
-            publico: cols[7] || '',
-            modalidade: cols[8] || '',
-            whatsapp: cols[9] ? cols[9].replace(/\D/g, '') : '',
-            email: cols[10] || '',
-            instagram: cols[11] ? cols[11].replace('@', '') : '',
-            periodos: periodosList.length > 0 ? periodosList.join(' | ') : 'Não informado',
-            foto: formatarUrlDrive(fotoUrl)
-          });
-        }
-      }
-      return result;
-    }
-
-    async function carregarDados() {
-      atualizarDataESaudacao();
-      try {
-        const response = await fetch(CSV_URL);
-        const data = await response.text();
-        listaCompleta = parseCSV(data);
-        
-        preencherFiltros();
-        renderizarCards(listaCompleta);
-      } catch (error) {
-        console.error('Erro ao carregar dados:', error);
-        document.getElementById('gridProfissionais').innerHTML = 
-          '<div style="color: red; padding: 20px;">Erro ao carregar a lista de profissionais.</div>';
-      }
+        return {
+          nome: obj['nome'] || obj['nome completo'] || 'Sem Nome',
+          profissao: obj['profissao'] || obj['profissão'] || 'Profissional',
+          especialidade: obj['especialidade'] || '',
+          servicos: obj['servicos'] || obj['serviços'] || '',
+          cidade: obj['cidade'] || 'Não informada',
+          modalidade: obj['modalidade'] || 'Presencial',
+          periodos: obj['periodos'] || obj['períodos'] || 'A combinar',
+          bio: obj['bio'] || obj['biografia'] || '',
+          whatsapp: obj['whatsapp'] || obj['telefone'] || '',
+          email: obj['email'] || '',
+          instagram: obj['instagram'] || '',
+          registro: obj['registro'] || '',
+          publico: obj['publico'] || obj['público'] || '',
+          foto: obj['foto'] || '',
+          destaque: obj['destaque'] ? obj['destaque'].toLowerCase() === 'sim' : false
+        };
+      });
     }
 
     function preencherFiltros() {
@@ -1124,133 +691,48 @@
       listaCompleta.forEach(p => {
         if (p.profissao) profissoes.add(p.profissao);
         if (p.cidade) cidades.add(p.cidade);
-        if (p.especialidade) {
-          p.especialidade.split(',').forEach(e => especialidades.add(e.trim()));
-        }
+        if (p.especialidade) especialidades.add(p.especialidade);
       });
 
-      profissoes.forEach(prof => selectProf.innerHTML += `<option value="${prof}">${prof}</option>`);
-      cidades.forEach(cid => selectCid.innerHTML += `<option value="${cid}">${cid}</option>`);
-      especialidades.forEach(esp => selectEsp.innerHTML += `<option value="${esp}">${esp}</option>`);
+      Array.from(profissoes).sort().forEach(p => {
+        selectProf.innerHTML += `<option value="${p}">${p}</option>`;
+      });
+
+      Array.from(cidades).sort().forEach(c => {
+        selectCid.innerHTML += `<option value="${c}">${c}</option>`;
+      });
+
+      Array.from(especialidades).sort().forEach(e => {
+        if (e) selectEsp.innerHTML += `<option value="${e}">${e}</option>`;
+      });
     }
 
-    function renderizarCards(profissionais) {
-      const grid = document.getElementById('gridProfissionais');
-      const contador = document.getElementById('contadorResultados');
-      grid.innerHTML = '';
-      contador.innerText = `Profissionais encontrados (${profissionais.length})`;
+    function renderizarDestaques() {
+      const container = document.getElementById('sliderContainer');
+      container.innerHTML = '';
 
-      if (profissionais.length === 0) {
-        grid.innerHTML = `
-          <div style="color: var(--text-muted); padding: 20px;">
-            Nenhum profissional encontrado com os filtros selecionados.
-          </div>`;
-        return;
-      }
+      const destaques = listaCompleta.filter(p => p.destaque);
+      const listaExibicao = destaques.length > 0 ? destaques : listaCompleta.slice(0, 5);
 
-      profissionais.forEach((p) => {
+      listaExibicao.forEach(p => {
         const card = document.createElement('div');
-        card.className = 'prof-card';
+        card.className = 'prof-card carousel-item';
         card.onclick = () => abrirModal(p);
 
-        const avatarHTML = p.foto 
-          ? `<img src="${p.foto}" alt="${p.nome}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\\'fa-solid fa-user\\'></i>';">`
-          : `<i class="fa-solid fa-user"></i>`;
-
-        const tagsArr = p.servicos ? p.servicos.split(',').slice(0, 2) : [];
-        const tagsHTML = tagsArr.map(t => `<span class="prof-tag">${t.trim()}</span>`).join('');
+        const avatarContent = p.foto 
+          ? `<img src="${p.foto}" alt="${p.nome}">`
+          : '<i class="fa-solid fa-user"></i>';
 
         card.innerHTML = `
-          <i class="fa-regular fa-heart prof-fav"></i>
-          <div class="prof-avatar">${avatarHTML}</div>
-          <div class="prof-body">
-            <div class="prof-name" title="${p.nome}">${p.nome}</div>
-            <div class="prof-profession">${p.profissao}</div>
-            ${p.especialidade ? `<div class="prof-spec">${p.especialidade}</div>` : ''}
-            <div class="prof-location"><i class="fa-solid fa-location-dot"></i> ${p.cidade || 'Itapevi'}</div>
-            <div class="prof-tags">${tagsHTML}</div>
-            <div class="prof-hours"><i class="fa-regular fa-clock"></i> ${p.periodos}</div>
-          </div>
+          <div class="prof-avatar">${avatarContent}</div>
+          <div class="prof-name">${p.nome}</div>
+          <div class="prof-profession">${p.profissao}</div>
+          <div class="prof-spec">${p.especialidade}</div>
+          <div class="prof-location"><i class="fa-solid fa-location-dot"></i> ${p.cidade}</div>
         `;
-
-        grid.appendChild(card);
-      });
-
-      // Card Dica de Bem-Estar
-      const tipCard = document.createElement('div');
-      tipCard.className = 'card-tip';
-      tipCard.innerHTML = `
-        <div class="tip-header">
-          <div class="tip-icon"><i class="fa-solid fa-star"></i></div>
-          <div class="tip-title">Dica de bem-estar</div>
-        </div>
-        <div class="tip-text">
-          Cuidar da saúde mental é tão importante quanto cuidar do corpo. Encontre o apoio que você precisa!
-        </div>
-        <button class="btn-tip">Saiba mais</button>
-      `;
-      grid.appendChild(tipCard);
-    }
-
-    function scrollCarrossel(distancia) {
-      document.getElementById('sliderContainer').scrollBy({
-        left: distancia,
-        behavior: 'smooth'
+        container.appendChild(card);
       });
     }
-
-    function abrirModal(p) {
-      document.getElementById('modalNome').innerText = p.nome || 'Sem nome';
-      document.getElementById('modalRegistro').innerText = p.registro ? `Reg: ${p.registro}` : 'Sem registro';
-      document.getElementById('modalBio').innerText = p.bio || '-';
-      document.getElementById('modalEspecialidades').innerText = p.especialidade || '-';
-      document.getElementById('modalServicos').innerText = p.servicos || '-';
-      document.getElementById('modalPublico').innerText = p.publico || '-';
-      document.getElementById('modalModalidade').innerText = p.modalidade || '-';
-      document.getElementById('modalPeriodos').innerText = p.periodos || '-';
-
-      const fotoContainer = document.getElementById('modalFotoContainer');
-      if (p.foto) {
-        fotoContainer.innerHTML = `<img src="${p.foto}" alt="${p.nome}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\\'fa-solid fa-user\\'></i>';">`;
-      } else {
-        fotoContainer.innerHTML = `<i class="fa-solid fa-user"></i>`;
-      }
-
-      const contatosContainer = document.getElementById('modalContatos');
-      contatosContainer.innerHTML = '';
-
-      if (p.whatsapp) {
-        contatosContainer.innerHTML += `
-          <a href="https://wa.me/55${p.whatsapp}" target="_blank" class="contact-btn btn-whatsapp-modal">
-            <i class="fa-brands fa-whatsapp"></i> WhatsApp
-          </a>`;
-      }
-      if (p.email) {
-        contatosContainer.innerHTML += `
-          <a href="mailto:${p.email}" class="contact-btn btn-email-modal">
-            <i class="fa-solid fa-envelope"></i> E-mail
-          </a>`;
-      }
-      if (p.instagram) {
-        contatosContainer.innerHTML += `
-          <a href="https://instagram.com/${p.instagram}" target="_blank" class="contact-btn btn-instagram-modal">
-            <i class="fa-brands fa-instagram"></i> Instagram
-          </a>`;
-      }
-
-      document.getElementById('modalResumo').classList.add('active');
-    }
-
-    function fecharModal() {
-      document.getElementById('modalResumo').classList.remove('active');
-    }
-
-    window.onclick = function(event) {
-      const modal = document.getElementById('modalResumo');
-      if (event.target === modal) {
-        fecharModal();
-      }
-    };
 
     function aplicarFiltros() {
       const prof = document.getElementById('selectProfissao').value.toLowerCase();
@@ -1259,11 +741,10 @@
       const srv = document.getElementById('inputServicos').value.toLowerCase();
 
       const filtrados = listaCompleta.filter(p => {
-        const matchProf = !prof || p.profissao.toLowerCase().includes(prof);
-        const matchCid = !cid || p.cidade.toLowerCase().includes(cid);
-        const matchEsp = !esp || p.especialidade.toLowerCase().includes(esp);
-        const matchSrv = !srv || p.servicos.toLowerCase().includes(srv) || p.bio.toLowerCase().includes(srv);
-
+        const matchProf = !prof || (p.profissao && p.profissao.toLowerCase().includes(prof));
+        const matchCid = !cid || (p.cidade && p.cidade.toLowerCase().includes(cid));
+        const matchEsp = !esp || (p.especialidade && p.especialidade.toLowerCase().includes(esp));
+        const matchSrv = !srv || (p.servicos && p.servicos.toLowerCase().includes(srv));
         return matchProf && matchCid && matchEsp && matchSrv;
       });
 
@@ -1278,7 +759,94 @@
       renderizarCards(listaCompleta);
     }
 
-    window.onload = carregarDados;
+    function renderizarCards(lista) {
+      const container = document.getElementById('gridProfissionais');
+      const contador = document.getElementById('contadorResultados');
+      
+      contador.innerText = `Profissionais encontrados (${lista.length})`;
+      container.innerHTML = '';
+
+      if (lista.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); padding: 20px;">Nenhum profissional encontrado com os filtros selecionados.</div>';
+        return;
+      }
+
+      lista.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'prof-card';
+        card.onclick = () => abrirModal(p);
+
+        const avatarContent = p.foto 
+          ? `<img src="${p.foto}" alt="${p.nome}">`
+          : '<i class="fa-solid fa-user"></i>';
+
+        card.innerHTML = `
+          <i class="fa-regular fa-heart prof-fav" title="Favoritar" onclick="event.stopPropagation(); this.classList.toggle('fa-solid'); this.classList.toggle('fa-regular');"></i>
+          <div class="prof-avatar">${avatarContent}</div>
+          <div class="prof-name" title="${p.nome}">${p.nome}</div>
+          <div class="prof-profession">${p.profissao}</div>
+          <div class="prof-spec">${p.especialidade}</div>
+          <div class="prof-location"><i class="fa-solid fa-location-dot"></i> ${p.cidade}</div>
+          <div class="prof-tags">
+            <span class="prof-tag">${p.modalidade}</span>
+          </div>
+          <div class="prof-hours"><i class="fa-regular fa-clock"></i> ${p.periodos}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function abrirModal(p) {
+      document.getElementById('modalNome').innerText = p.nome || 'Profissional';
+      document.getElementById('modalRegistro').innerText = p.registro ? `Reg: ${p.registro}` : 'Reg: Não informado';
+      document.getElementById('modalBio').innerText = p.bio || 'Sem biografia disponível.';
+      document.getElementById('modalEspecialidades').innerText = p.especialidade || '-';
+      document.getElementById('modalServicos').innerText = p.servicos || '-';
+      document.getElementById('modalPublico').innerText = p.publico || '-';
+      document.getElementById('modalModalidade').innerText = p.modalidade || '-';
+      document.getElementById('modalPeriodos').innerText = p.periodos || '-';
+
+      const fotoContainer = document.getElementById('modalFotoContainer');
+      if (p.foto) {
+        fotoContainer.innerHTML = `<img src="${p.foto}" alt="${p.nome}">`;
+      } else {
+        fotoContainer.innerHTML = '<i class="fa-solid fa-user"></i>';
+      }
+
+      const contatosContainer = document.getElementById('modalContatos');
+      contatosContainer.innerHTML = '';
+
+      if (p.whatsapp) {
+        contatosContainer.innerHTML += `
+          <a href="https://wa.me/55${p.whatsapp.replace(/\D/g,'')}" target="_blank" class="contact-btn btn-whatsapp-modal">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </a>`;
+      }
+      if (p.email) {
+        contatosContainer.innerHTML += `
+          <a href="mailto:${p.email}" class="contact-btn btn-email-modal">
+            <i class="fa-regular fa-envelope"></i> E-mail
+          </a>`;
+      }
+      if (p.instagram) {
+        contatosContainer.innerHTML += `
+          <a href="https://instagram.com/${p.instagram.replace('@','')}" target="_blank" class="contact-btn btn-instagram-modal">
+            <i class="fa-brands fa-instagram"></i> Instagram
+          </a>`;
+      }
+
+      document.getElementById('modalResumo').classList.add('active');
+    }
+
+    function fecharModal() {
+      document.getElementById('modalResumo').classList.remove('active');
+    }
+
+    function scrollCarrossel(valor) {
+      document.getElementById('sliderContainer').scrollBy({ left: valor, behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', carregarDados);
   </script>
 </body>
 </html>
