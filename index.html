@@ -36,11 +36,11 @@
       padding: 20px;
     }
 
-    /* Moldura Profissional e Elegante */
+    /* Moldura Principal */
     .page-frame {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-top: 5px solid var(--primary); /* Borda superior corporativa */
+      border-top: 5px solid var(--primary);
       border-radius: 16px;
       padding-bottom: 40px;
       overflow: hidden;
@@ -86,7 +86,15 @@
     }
 
     .brand { display: flex; align-items: center; gap: 12px; }
-    .brand-logo {
+    
+    /* Logo da Rede Vitta */
+    .brand-logo-img {
+      max-height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+    
+    .brand-logo-fallback {
       background: #f3e8ff;
       color: var(--primary);
       width: 42px;
@@ -97,6 +105,7 @@
       justify-content: center;
       font-size: 1.2rem;
     }
+    
     .brand-title { font-size: 1.3rem; font-weight: 800; color: var(--primary); line-height: 1.1; }
     .brand-subtitle { font-size: 0.8rem; color: var(--secondary); font-weight: 700; }
 
@@ -114,12 +123,12 @@
 
     .container { padding: 0 24px; }
 
-    /* Hero Banner */
+    /* Hero Banner com Imagem Personalizada */
     .hero {
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
-      padding: 30px 0;
+      padding: 24px 0;
       gap: 20px;
     }
 
@@ -150,22 +159,17 @@
     .hero-image-container {
       display: flex;
       justify-content: center;
+      align-items: center;
     }
 
-    .hero-avatar-main {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-      padding: 5px;
-    }
-    
-    .hero-avatar-main img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      background: #fff;
+    /* Ajustado para exibir a arte do hero completa */
+    .hero-banner-img {
+      max-width: 100%;
+      max-height: 280px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 16px;
     }
 
     /* Filter Card */
@@ -201,21 +205,30 @@
 
     .filter-input-wrapper i {
       position: absolute;
-      left: 14px;
+      left: 12px;
       color: var(--primary);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      pointer-events: none;
+      z-index: 1;
     }
 
     .filter-group select, .filter-group input {
       width: 100%;
-      padding: 12px 12px 12px 38px;
+      padding: 10px 10px 10px 34px;
       border: 1px solid var(--border);
       border-radius: 10px;
       background-color: #ffffff;
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       color: var(--text-main);
       outline: none;
       transition: all 0.2s;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .filter-group select:focus, .filter-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(92, 36, 131, 0.1);
     }
 
     .btn-search {
@@ -231,6 +244,8 @@
       justify-content: center;
       gap: 8px;
     }
+
+    .btn-search:hover { opacity: 0.9; }
 
     .btn-reset {
       background: transparent;
@@ -294,10 +309,7 @@
       scrollbar-color: var(--primary) transparent;
     }
 
-    .cards-slider-container::-webkit-scrollbar {
-      height: 6px;
-    }
-
+    .cards-slider-container::-webkit-scrollbar { height: 6px; }
     .cards-slider-container::-webkit-scrollbar-thumb {
       background-color: var(--primary);
       border-radius: 10px;
@@ -358,26 +370,9 @@
     .prof-avatar img { width: 100%; height: 100%; object-fit: cover; }
     .prof-avatar i { font-size: 2.2rem; color: #94a3b8; }
 
-    .prof-name {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 2px;
-    }
-
-    .prof-profession {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .prof-spec {
-      font-size: 0.8rem;
-      color: var(--secondary);
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
+    .prof-name { font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 2px; }
+    .prof-profession { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; }
+    .prof-spec { font-size: 0.8rem; color: var(--secondary); font-weight: 600; margin-bottom: 6px; }
 
     .prof-location {
       font-size: 0.78rem;
@@ -438,7 +433,7 @@
     .btn-eml { background-color: #ea4335; }
     .btn-ins { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
 
-    /* Modal / Popup de Resumo Detalhado */
+    /* Modal / Popup */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -453,10 +448,7 @@
       padding: 20px;
     }
 
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
 
     .modal-card {
       background: #fff;
@@ -471,9 +463,7 @@
       position: relative;
     }
 
-    @media (max-width: 700px) {
-      .modal-card { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 700px) { .modal-card { grid-template-columns: 1fr; } }
 
     .modal-close {
       position: absolute;
@@ -560,7 +550,7 @@
 
   <div class="page-frame">
     
-    <!-- Topbar com Saudação e Data em Fuso do Brasil -->
+    <!-- Topbar com Data e Saudação -->
     <div class="top-bar">
       <div class="top-bar-greeting" id="textoSaudacao">Boa noite</div>
       <div class="top-bar-date">
@@ -572,7 +562,12 @@
     <header>
       <div class="header-container">
         <div class="brand">
-          <div class="brand-logo"><i class="fa-solid fa-hospital-user"></i></div>
+          <!-- LOGO REDE VITTA COM CAMINHO COMPATÍVEL -->
+          <img src="logo-rede-vitta.png" alt="Logo Rede Vitta" class="brand-logo-img"
+               onerror="this.src='./logo-rede-vitta.png'; this.onerror=function(){ this.style.display='none'; document.getElementById('logoFallback').style.display='flex'; };">
+          <div class="brand-logo-fallback" id="logoFallback" style="display: none;">
+            <i class="fa-solid fa-hospital-user"></i>
+          </div>
           <div>
             <div class="brand-title">Rede Vitta</div>
             <div class="brand-subtitle">Coworking Saúde</div>
@@ -586,16 +581,16 @@
 
     <div class="container">
       
-      <!-- Banner Hero -->
+      <!-- HERO BANNER -->
       <div class="hero">
         <div>
           <h1 class="hero-title">Catálogo de<br><span>Profissionais</span></h1>
           <p class="hero-subtitle">Busque, conecte e transforme sua saúde e bem-estar com os melhores especialistas.</p>
         </div>
         <div class="hero-image-container">
-          <div class="hero-avatar-main">
-            <img src="https://images.unsplash.com/photo-1594824813566-78a9a441e8e2?auto=format&fit=crop&q=80&w=400" alt="Profissional da Saúde">
-          </div>
+          <!-- IMAGEM HERO COMPLETA -->
+          <img src="hero-profissional.png" alt="Profissional da Saúde" class="hero-banner-img"
+               onerror="this.src='./hero-profissional.png'; this.onerror=null;">
         </div>
       </div>
 
@@ -653,7 +648,7 @@
         </div>
       </div>
 
-      <!-- Cabeçalho do Carrossel e Controles -->
+      <!-- Cabeçalho do Carrossel -->
       <div class="results-header">
         <div class="results-count" id="contadorResultados">Profissionais encontrados (0)</div>
         <div class="carousel-controls">
@@ -662,7 +657,7 @@
         </div>
       </div>
 
-      <!-- Carrossel de Cards com Scroll Horizontal -->
+      <!-- Carrossel -->
       <div class="cards-slider-container" id="sliderContainer">
         <div class="cards-grid" id="gridProfissionais">
           <div style="color: var(--text-muted); padding: 20px;">
@@ -674,7 +669,7 @@
     </div>
   </div>
 
-  <!-- Modal Pop-up de Resumo Detalhado -->
+  <!-- Modal Pop-up -->
   <div class="modal-overlay" id="modalResumo">
     <div class="modal-card">
       <button class="modal-close" onclick="fecharModal()">&times;</button>
@@ -728,16 +723,13 @@
   </div>
 
   <script>
-    // Função para atualizar data e saudação dinâmica (Fuso Horário Brasil)
     function atualizarDataESaudacao() {
       const agora = new Date();
       
-      // Ajustar para o fuso horário de Brasília
       const opcoesData = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Sao_Paulo' };
       const dataFormatada = agora.toLocaleDateString('pt-BR', opcoesData);
       document.getElementById('textoData').innerText = dataFormatada;
 
-      // Obter hora atual em Brasília
       const horaStr = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', hour12: false, timeZone: 'America/Sao_Paulo' });
       const hora = parseInt(horaStr, 10);
 
