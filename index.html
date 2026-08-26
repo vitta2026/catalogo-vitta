@@ -476,36 +476,35 @@
   </header>
 
   <div class="container">
-    
-    <!-- ÁREA DE FILTROS -->
+    <!-- FILTROS -->
     <div class="filter-card">
       <div class="filter-grid">
         <div class="form-group">
-          <label>Profissão</label>
+          <label for="selectProfissao">Profissão</label>
           <select id="selectProfissao" class="form-control">
             <option value="">Todas</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Cidade</label>
+          <label for="selectCidade">Cidade</label>
           <select id="selectCidade" class="form-control">
             <option value="">Todas</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Especialidade</label>
+          <label for="selectEspecialidade">Especialidade</label>
           <select id="selectEspecialidade" class="form-control">
             <option value="">Todas</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Serviços / Palavra-chave</label>
+          <label for="inputServicos">Serviços / Palavra-chave</label>
           <input type="text" id="inputServicos" class="form-control" placeholder="Ex: Fisioterapia, Exames...">
         </div>
       </div>
       <div class="filter-actions">
-        <button class="btn btn-secondary" onclick="limparFiltros()">Limpar</button>
-        <button class="btn btn-primary" onclick="aplicarFiltros()"><i class="fa-solid fa-magnifying-glass"></i> Filtrar</button>
+        <button type="button" class="btn btn-secondary" onclick="limparFiltros()">Limpar</button>
+        <button type="button" class="btn btn-primary" onclick="aplicarFiltros()"><i class="fa-solid fa-magnifying-glass"></i> Filtrar</button>
       </div>
     </div>
 
@@ -514,27 +513,22 @@
       <span>Destaques da Semana</span>
     </div>
     <div class="carousel-wrapper">
-      <button class="carousel-btn prev" onclick="scrollCarrossel(-280)"><i class="fa-solid fa-chevron-left"></i></button>
-      <div class="carousel-container" id="sliderContainer">
-        <!-- Cards do carrossel injetados via JS -->
-      </div>
-      <button class="carousel-btn next" onclick="scrollCarrossel(280)"><i class="fa-solid fa-chevron-right"></i></button>
+      <button type="button" class="carousel-btn prev" onclick="scrollCarrossel(-280)"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="carousel-container" id="sliderContainer"></div>
+      <button type="button" class="carousel-btn next" onclick="scrollCarrossel(280)"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
 
     <!-- LISTAGEM PRINCIPAL -->
     <div class="section-title">
       <span id="contadorResultados">Todos os Profissionais</span>
     </div>
-    <div class="grid-profissionais" id="gridProfissionais">
-      <!-- Cards normais injetados via JS -->
-    </div>
-
+    <div class="grid-profissionais" id="gridProfissionais"></div>
   </div>
 
   <!-- MODAL DE DETALHES -->
   <div class="modal-overlay" id="modalResumo">
     <div class="modal-card">
-      <button class="modal-close" onclick="fecharModal()"><i class="fa-solid fa-xmark"></i></button>
+      <button type="button" class="modal-close" onclick="fecharModal()"><i class="fa-solid fa-xmark"></i></button>
       
       <div class="modal-header">
         <div class="modal-avatar" id="modalFotoContainer">
@@ -576,88 +570,80 @@
         <p id="modalPeriodos">-</p>
       </div>
 
-      <div class="modal-contacts" id="modalContatos">
-        <!-- Botões de contato dinâmicos -->
-      </div>
+      <div class="modal-contacts" id="modalContatos"></div>
     </div>
   </div>
+
   <script>
     const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRsK54K2aKnd4ZfK8-s6r5wM2u-PZ-LgJ2R9v_W5w/pub?output=csv';
 
     let listaCompleta = [];
 
+    const fallbackData = [
+      {
+        nome: "Dra. Ana Silva",
+        profissao: "Psicóloga",
+        especialidade: "Terapia Cognitivo-Comportamental",
+        servicos: "Ansiedade, Depressão, Autoestima",
+        cidade: "São Paulo",
+        modalidade: "Online / Presencial",
+        periodos: "Manhã e Tarde",
+        bio: "Psicóloga clínica com mais de 8 anos de experiência.",
+        whatsapp: "11999999999",
+        email: "ana.silva@email.com",
+        instagram: "dra.anasilva",
+        registro: "CRP 06/123456",
+        publico: "Adultos e Adolescentes",
+        destaque: true
+      },
+      {
+        nome: "Dr. Carlos Eduardo",
+        profissao: "Fisioterapeuta",
+        especialidade: "Fisioterapia Esportiva",
+        servicos: "Reabilitação, Liberação Miofascial",
+        cidade: "Itapevi",
+        modalidade: "Presencial",
+        periodos: "Tarde e Noite",
+        bio: "Especialista em recuperação de lesões musculares.",
+        whatsapp: "11988888888",
+        email: "carlos.fisio@email.com",
+        instagram: "carlos.fisio",
+        registro: "CREFITO 12345",
+        publico: "Atletas e Adultos",
+        destaque: true
+      }
+    ];
+
     async function carregarDados() {
       try {
-        // Dados de fallback para testes caso a URL falhe
-        const fallbackData = [
-          {
-            nome: "Dra. Ana Silva",
-            profissao: "Psicóloga",
-            especialidade: "Terapia Cognitivo-Comportamental",
-            servicos: "Ansiedade, Depressão, Autoestima",
-            cidade: "São Paulo",
-            modalidade: "Online / Presencial",
-            periodos: "Manhã e Tarde",
-            bio: "Psicóloga clínica com mais de 8 anos de experiência no acompanhamento de adultos e adolescentes.",
-            whatsapp: "11999999999",
-            email: "ana.silva@email.com",
-            instagram: "dra.anasilva",
-            registro: "CRP 06/123456",
-            publico: "Adultos e Adolescentes",
-            destaque: true
-          },
-          {
-            nome: "Dr. Carlos Eduardo",
-            profissao: "Fisioterapeuta",
-            especialidade: "Fisioterapia Esportiva",
-            servicos: "Reabilitação, Liberação Miofascial",
-            cidade: "Itapevi",
-            modalidade: "Presencial",
-            periodos: "Tarde e Noite",
-            bio: "Especialista em recuperação de lesões musculares e articulares.",
-            whatsapp: "11988888888",
-            email: "carlos.fisio@email.com",
-            instagram: "carlos.fisio",
-            registro: "CREFITO 12345",
-            publico: "Atletas e Adultos",
-            destaque: true
-          }
-        ];
-
-        try {
-          const response = await fetch(GOOGLE_SHEET_CSV_URL);
-          if (response.ok) {
-            const csvText = await response.text();
-            listaCompleta = parseCSV(csvText);
-          } else {
-            listaCompleta = fallbackData;
-          }
-        } catch (e) {
-          console.warn('Erro ao carregar CSV remoto, usando dados de exemplo.', e);
+        const response = await fetch(GOOGLE_SHEET_CSV_URL);
+        if (response.ok) {
+          const csvText = await response.text();
+          listaCompleta = parseCSV(csvText);
+        } else {
           listaCompleta = fallbackData;
         }
-
-        preencherFiltros();
-        renderizarDestaques();
-        renderizarCards(listaCompleta);
-
-      } catch (err) {
-        console.error("Erro ao inicializar:", err);
+      } catch (e) {
+        listaCompleta = fallbackData;
       }
+
+      if (!listaCompleta.length) listaCompleta = fallbackData;
+
+      preencherFiltros();
+      renderizarDestaques();
+      renderizarCards(listaCompleta);
     }
 
     function parseCSV(text) {
-      const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+      const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
       if (lines.length < 2) return [];
 
       const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim().toLowerCase());
       
       return lines.slice(1).map(line => {
-        const values = line.split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/).map(val => val.replace(/^"|"$/g, '').trim());
+        const values = line.split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/).map(v => v.replace(/^"|"$/g, '').trim());
         let obj = {};
-        headers.forEach((h, i) => {
-          obj[h] = values[i] || '';
-        });
+        headers.forEach((h, i) => { obj[h] = values[i] || ''; });
 
         return {
           nome: obj['nome'] || obj['nome completo'] || 'Sem Nome',
@@ -694,17 +680,9 @@
         if (p.especialidade) especialidades.add(p.especialidade);
       });
 
-      Array.from(profissoes).sort().forEach(p => {
-        selectProf.innerHTML += `<option value="${p}">${p}</option>`;
-      });
-
-      Array.from(cidades).sort().forEach(c => {
-        selectCid.innerHTML += `<option value="${c}">${c}</option>`;
-      });
-
-      Array.from(especialidades).sort().forEach(e => {
-        if (e) selectEsp.innerHTML += `<option value="${e}">${e}</option>`;
-      });
+      Array.from(profissoes).sort().forEach(p => selectProf.innerHTML += `<option value="${p}">${p}</option>`);
+      Array.from(cidades).sort().forEach(c => selectCid.innerHTML += `<option value="${c}">${c}</option>`);
+      Array.from(especialidades).sort().forEach(e => selectEsp.innerHTML += `<option value="${e}">${e}</option>`);
     }
 
     function renderizarDestaques() {
@@ -719,12 +697,12 @@
         card.className = 'prof-card carousel-item';
         card.onclick = () => abrirModal(p);
 
-        const avatarContent = p.foto 
+        const avatar = p.foto 
           ? `<img src="${p.foto}" alt="${p.nome}">`
           : '<i class="fa-solid fa-user"></i>';
 
         card.innerHTML = `
-          <div class="prof-avatar">${avatarContent}</div>
+          <div class="prof-avatar">${avatar}</div>
           <div class="prof-name">${p.nome}</div>
           <div class="prof-profession">${p.profissao}</div>
           <div class="prof-spec">${p.especialidade}</div>
@@ -741,10 +719,10 @@
       const srv = document.getElementById('inputServicos').value.toLowerCase();
 
       const filtrados = listaCompleta.filter(p => {
-        const matchProf = !prof || (p.profissao && p.profissao.toLowerCase().includes(prof));
-        const matchCid = !cid || (p.cidade && p.cidade.toLowerCase().includes(cid));
-        const matchEsp = !esp || (p.especialidade && p.especialidade.toLowerCase().includes(esp));
-        const matchSrv = !srv || (p.servicos && p.servicos.toLowerCase().includes(srv));
+        const matchProf = !prof || p.profissao.toLowerCase().includes(prof);
+        const matchCid = !cid || p.cidade.toLowerCase().includes(cid);
+        const matchEsp = !esp || p.especialidade.toLowerCase().includes(esp);
+        const matchSrv = !srv || p.servicos.toLowerCase().includes(srv);
         return matchProf && matchCid && matchEsp && matchSrv;
       });
 
@@ -767,7 +745,7 @@
       container.innerHTML = '';
 
       if (lista.length === 0) {
-        container.innerHTML = '<div style="color: var(--text-muted); padding: 20px;">Nenhum profissional encontrado com os filtros selecionados.</div>';
+        container.innerHTML = '<div style="color: var(--text-muted); padding: 20px;">Nenhum profissional encontrado.</div>';
         return;
       }
 
@@ -776,13 +754,13 @@
         card.className = 'prof-card';
         card.onclick = () => abrirModal(p);
 
-        const avatarContent = p.foto 
+        const avatar = p.foto 
           ? `<img src="${p.foto}" alt="${p.nome}">`
           : '<i class="fa-solid fa-user"></i>';
 
         card.innerHTML = `
           <i class="fa-regular fa-heart prof-fav" title="Favoritar" onclick="event.stopPropagation(); this.classList.toggle('fa-solid'); this.classList.toggle('fa-regular');"></i>
-          <div class="prof-avatar">${avatarContent}</div>
+          <div class="prof-avatar">${avatar}</div>
           <div class="prof-name" title="${p.nome}">${p.nome}</div>
           <div class="prof-profession">${p.profissao}</div>
           <div class="prof-spec">${p.especialidade}</div>
@@ -807,11 +785,9 @@
       document.getElementById('modalPeriodos').innerText = p.periodos || '-';
 
       const fotoContainer = document.getElementById('modalFotoContainer');
-      if (p.foto) {
-        fotoContainer.innerHTML = `<img src="${p.foto}" alt="${p.nome}">`;
-      } else {
-        fotoContainer.innerHTML = '<i class="fa-solid fa-user"></i>';
-      }
+      fotoContainer.innerHTML = p.foto 
+        ? `<img src="${p.foto}" alt="${p.nome}">`
+        : '<i class="fa-solid fa-user"></i>';
 
       const contatosContainer = document.getElementById('modalContatos');
       contatosContainer.innerHTML = '';
