@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Profissionais - Rede Vitta</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="page-frame">
+    
+    <div class="top-bar">
+      <div class="top-bar-greeting">
+         <span id="textoSaudacao">Boa noite!</span>
+      </div>
+      <div class="top-bar-date">
+        <i class="fa-regular fa-calendar"></i>
+        <span id="textoData">--/--/----</span>
+      </div>
+    </div>
+
+    <header>
+      <div class="header-container">
+        <div class="brand">
+          <img src="assets/logo-rede-vitta.png" alt="Logo Rede Vitta" class="brand-logo-img"
+               onerror="this.onerror=null; this.style.display='none'; document.getElementById('logoFallback').style.display='flex';">
+          <div class="brand-logo-fallback" id="logoFallback" style="display: none;">
+            <i class="fa-solid fa-hospital-user"></i>
+          </div>
+          <div>
+            <div class="brand-title">Rede Vitta</div>
+            <div class="brand-subtitle">Coworking Saúde</div>
+          </div>
+        </div>
+
+        <!-- PASSO A PASSO CENTRALIZADO -->
+        <div class="how-it-works">
+          <div class="how-title">✨ Como funciona?</div>
+          <div class="how-steps">
+            <div class="step-item">
+              <span class="step-icon">🔎</span>
+              <div>
+                <strong>1. Pesquise</strong>
+                <p>Profissão, cidade ou área</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right step-arrow"></i>
+            <div class="step-item">
+              <span class="step-icon">👤</span>
+              <div>
+                <strong>2. Encontre</strong>
+                <p>Confira os perfis</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right step-arrow"></i>
+            <div class="step-item">
+              <span class="step-icon">📞</span>
+              <div>
+                <strong>3. Contate</strong>
+                <p>Fale diretamente</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="badge-location">
+          <i class="fa-solid fa-location-dot"></i> Itapevi e Região
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      
+      <div class="hero">
+        <div class="hero-content">
+          <h1 class="hero-title">Encontre o profissional<span>ideal para você</span></h1>
+          <p class="hero-subtitle">Conecte-se com especialistas qualificados e cuide da sua saúde e bem-estar com quem entende do assunto.</p>
+          
+          <div class="hero-features">
+            <div class="feature-item">
+              <div class="feature-icon purple"><i class="fa-solid fa-user-group"></i></div>
+              <div class="feature-text">
+                <h4>Profissionais<br>qualificados</h4>
+                <p>Especialistas<br>verificados</p>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-icon teal"><i class="fa-solid fa-shield-halved"></i></div>
+              <div class="feature-text">
+                <h4>Segurança e<br>confiança</h4>
+                <p>Ambiente seguro<br>e acolhedor</p>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-icon lavender"><i class="fa-solid fa-heart-pulse"></i></div>
+              <div class="feature-text">
+                <h4>Saúde e<br>bem-estar</h4>
+                <p>Cuidado integral<br>para sua vida</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-graphics-container">
+          <div class="dots-pattern"></div>
+          <div class="hero-circle-bg"></div>
+
+          <div class="floating-badge badge-chat"><i class="fa-solid fa-comment-dots"></i></div>
+          <div class="floating-badge badge-pulse"><i class="fa-solid fa-heart-pulse"></i></div>
+          <div class="floating-badge badge-heart"><i class="fa-solid fa-heart"></i></div>
+          <div class="floating-badge badge-leaf"><i class="fa-solid fa-briefcase-medical"></i></div>
+          <div class="floating-badge badge-plus"><i class="fa-solid fa-plus"></i></div>
+
+          <img src="assets/hero-profissional.png" alt="Profissional da Saúde" class="hero-banner-img" onerror="this.onerror=null;">
+        </div>
+      </div>
+
+      <div class="filter-card">
+        <div class="filter-card-header">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <div class="filter-card-title">
+            <h3>Encontre o especialista ideal</h3>
+            <p>Use os filtros abaixo para encontrar o profissional ideal para suas necessidades.</p>
+          </div>
+        </div>
+
+        <div class="filter-grid">
+          
+          <div class="filter-group">
+            <label for="selectProfissao">Profissão</label>
+            <div class="filter-input-wrapper">
+              <i class="fa-solid fa-user-doctor"></i>
+              <select id="selectProfissao" onchange="aplicarFiltros()">
+                <option value="">Todas as Profissões</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label for="selectCidade">Cidade</label>
+            <div class="filter-input-wrapper">
+              <i class="fa-solid fa-location-dot"></i>
+              <select id="selectCidade" onchange="aplicarFiltros()">
+                <option value="">Todas as Cidades</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- CAMPO ESPECIALIDADE CORRIGIDO -->
+          <div class="filter-group">
+            <label for="inputEspecialidade">Especialidade</label>
+            <div class="filter-input-wrapper">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input 
+                type="text" 
+                id="inputEspecialidade" 
+                placeholder="Digite a especialidade..." 
+                oninput="aplicarFiltros()"
+              >
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label for="inputServicos">Serviços Prestados</label>
+            <div class="filter-input-wrapper">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="inputServicos" placeholder="Ex: Consulta, Pré-natal..." oninput="aplicarFiltros()">
+            </div>
+          </div>
+
+          <div class="filter-actions">
+            <button class="btn-search" onclick="aplicarFiltros()">
+              <i class="fa-solid fa-magnifying-glass"></i> Buscar
+            </button>
+            <button class="btn-reset" onclick="limparFiltros()">
+              <i class="fa-solid fa-rotate-left"></i> Limpar filtros
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="results-header">
+        <div class="results-title-group">
+          <div class="results-icon"><i class="fa-solid fa-users"></i></div>
+          <div>
+            <div class="results-count" id="contadorResultados">Profissionais encontrados (0)</div>
+            <div class="results-subtitle">Conheça os especialistas disponíveis.</div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <button class="btn-nav" onclick="scrollCarrossel(-360)" title="Rolar para esquerda"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="btn-nav" onclick="scrollCarrossel(360)" title="Rolar para direita"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="cards-slider-container" id="sliderContainer">
+        <div class="cards-grid" id="gridProfissionais">
+          <div style="color: var(--text-muted); padding: 20px;">
+            Carregando profissionais...
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalResumo">
+    <div class="modal-card">
+      <button class="modal-close" onclick="fecharModal()">&times;</button>
+      
+      <div class="profile-sidebar">
+        <div class="profile-avatar-large" id="modalFotoContainer">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <h2 id="modalNome" style="font-size: 1.2rem;">Nome do Profissional</h2>
+        <div class="profile-register" id="modalRegistro">Reg: --</div>
+      </div>
+
+      <div class="profile-info">
+        <div class="info-section">
+          <h3><i class="fa-solid fa-align-left"></i> Mini Biografia</h3>
+          <p id="modalBio">-</p>
+        </div>
+
+        <div class="info-section">
+          <h3><i class="fa-solid fa-stethoscope"></i> Especialidades</h3>
+          <p id="modalEspecialidades">-</p>
+        </div>
+
+        <div class="info-section">
+          <h3><i class="fa-solid fa-hand-holding-medical"></i> Serviços Prestados</h3>
+          <p id="modalServicos">-</p>
+        </div>
+
+        <div class="info-section">
+          <h3><i class="fa-solid fa-users"></i> Público-alvo</h3>
+          <p id="modalPublico">-</p>
+        </div>
+
+        <div class="info-section">
+          <h3><i class="fa-solid fa-laptop-house"></i> Modalidade de Atendimento</h3>
+          <p id="modalModalidade">-</p>
+        </div>
+
+        <div class="info-section">
+          <h3><i class="fa-solid fa-clock"></i> Período de Atendimento</h3>
+          <p id="modalPeriodos">-</p>
+        </div>
+
+        <div class="info-section">
+          <h3><i class="fa-solid fa-address-book"></i> Contato</h3>
+          <div class="contact-links" id="modalContatos"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
