@@ -4,34 +4,29 @@ let listaCompleta = [];
 
 function atualizarDataESaudacao() {
   const agora = new Date();
-  
   const opcoesData = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Sao_Paulo' };
   const dataFormatada = agora.toLocaleDateString('pt-BR', opcoesData);
-  document.getElementById('textoData').innerText = dataFormatada;
+  const elData = document.getElementById('textoData');
+  if (elData) elData.innerText = dataFormatada;
 
   const horaStr = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', hour12: false, timeZone: 'America/Sao_Paulo' });
   const hora = parseInt(horaStr, 10);
 
   let saudacao = 'Boa noite!';
-  if (hora >= 5 && hora < 12) {
-    saudacao = 'Bom dia!';
-  } else if (hora >= 12 && hora < 18) {
-    saudacao = 'Boa tarde!';
-  }
+  if (hora >= 5 && hora < 12) saudacao = 'Bom dia!';
+  else if (hora >= 12 && hora < 18) saudacao = 'Boa tarde!';
 
-  document.getElementById('textoSaudacao').innerText = saudacao;
+  const elSaudacao = document.getElementById('textoSaudacao');
+  if (elSaudacao) elSaudacao.innerText = saudacao;
 }
 
 function padronizarTexto(texto) {
   if (!texto) return '';
-
   return texto
     .toString()
     .trim()
     .toLowerCase()
-    .replace(/(^|\s)([a-zá-úà-üç])/gi, (match, espaco, letra) => {
-      return espaco + letra.toUpperCase();
-    });
+    .replace(/(^|\s)([a-zá-úà-üç])/gi, (match, espaco, letra) => espaco + letra.toUpperCase());
 }
 
 function formatarUrlDrive(url) {
@@ -43,61 +38,100 @@ function formatarUrlDrive(url) {
   return url;
 }
 
-function parseCSV(text) {
-  const p = textLine => {
-    let arr = [''], i = 0, c = false;
-    for (let ch of textLine) {
-      if (ch === '"') { c = !c; }
-      else if (ch === ',' && !c) { arr.push(''); i++; }
-      else { arr[i] += ch; }
+function parseCSVLine(textLine) {
+  let arr = [''], i = 0, inQuotes = false;
+  for (let ch of textLine) {
+    if (ch === '"') {
+      inQuotes = !inQuotes;
+    } else if (ch === ',' && !inQuotes) {
+      arr.push('');
+      i++;
+    } else {
+      arr[i] += ch;
     }
-    return arr;
+  }
+  return arr.map(c => c.replace(/^"|"$/g, '').trim());
+}
+
+function parseCSV(text) {
+  const rawLines = text.split(/\r?\n/);
+  const lines = [];
+  let buffer = '';
+
+  for (let line of rawLines) {
+    buffer += (buffer ? '\n' : '') + line;
+    const quoteCount = (buffer.match(/"/g) || []).length;
+    if (quoteCount % 2 === 0) {
+      lines.push(buffer);
+      buffer = '';
+    }
+  }
+
+  if (lines.length < 2) return [];
+
+  const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase().trim());
+  
+  const getIndex = (keys, defaultIdx) => {
+    const idx = headers.findIndex(h => keys.some(k => h.includes(k)));
+    return idx !== -1 ? idx : defaultIdx;
   };
 
-  const lines = text.split(/\r?\n/);
+  const idxSituacao = getIndex(['situacao', 'situação'], 18);
+  const idxNome = getIndex(['nome'], 1);
+  const idxCidade = getIndex(['cidade'], 2);
+  const idxEspecializacoes = getIndex(['especialização', 'especializacoes', 'especialidade'], 3);
+  const idxProfissao = 17; // Coluna R
+  
+  const idxServicos = getIndex(['serviço', 'servico', 'atendimento'], 4);
+  const idxRegistro = getIndex(['registro'], 5);
+  const idxBio = getIndex(['bio', 'resumo'], 6);
+  const idxPublico = getIndex(['público', 'publico'], 7);
+  const idxModalidade = getIndex(['modalidade'], 8);
+  const idxWhatsapp = getIndex(['whatsapp', 'telefone', 'celular'], 9);
+  const idxEmail = getIndex(['email', 'e-mail'], 10);
+  const idxInstagram = getIndex(['instagram'], 11);
+
   const result = [];
 
   for (let i = 1; i < lines.length; i++) {
     if (!lines[i].trim()) continue;
-    const cols = p(lines[i]).map(c => c.replace(/^"|"$/g, '').trim());
+    const cols = parseCSVLine(lines[i]);
 
-    if (cols.length >= 2) {
+    if (cols.length >= 2 && cols[idxNome] !== '') {
+      const situacao = (cols[idxSituacao] || '').toUpperCase();
+      
+      if (situacao !== 'ON') {
+        continue;
+      }
+
       let fotoUrl = '';
       cols.forEach(c => {
-        if (c.includes('drive.google.com')) {
-          fotoUrl = c;
+        if (c.includes('drive.google.com')) fotoUrl = c;
+      });
+
+      let periodosList = [];
+      cols.forEach((col, idx) => {
+        if (idx > 11 && idx < idxSituacao && col && col.toUpperCase() !== 'N/A' && !col.includes('drive.google.com')) {
+          periodosList.push(col);
         }
       });
 
-      const segAsex = cols[13] || cols[12] || '';
-      const sabado = cols[14] || '';
-      const domingo = cols[15] || '';
-
-      let periodosList = [];
-      if (segAsex && segAsex.toUpperCase() !== 'N/A' && !segAsex.includes('drive.google.com')) {
-        periodosList.push(`Seg a Sex: ${segAsex}`);
-      }
-      if (sabado && sabado.toUpperCase() !== 'N/A') {
-        periodosList.push(`Sáb: ${sabado}`);
-      }
-      if (domingo && domingo.toUpperCase() !== 'N/A') {
-        periodosList.push(`Dom/Fer: ${domingo}`);
-      }
+      const profissaoBruta = cols[idxProfissao] || cols[3] || 'Profissional da Saúde';
 
       result.push({
-        nome: cols[1] || '',
-        cidade: cols[2] || '',
-        profissao: cols[3] || 'Profissional da Saúde',
-        especialidade: cols[3] || '',
-        servicos: cols[4] || '',
-        registro: cols[5] || '',
-        bio: cols[6] || '',
-        publico: cols[7] || '',
-        modalidade: cols[8] || '',
-        whatsapp: cols[9] ? cols[9].replace(/\D/g, '') : '',
-        email: cols[10] || '',
-        instagram: cols[11] ? cols[11].replace('@', '') : '',
-        periodos: periodosList.length > 0 ? periodosList.join(' | ') : 'Não informado',
+        nome: cols[idxNome] || '',
+        cidade: cols[idxCidade] || '',
+        profissao: padronizarTexto(profissaoBruta),
+        especialidade: cols[idxEspecializacoes] || '',
+        servicos: cols[idxServicos] || '',
+        registro: cols[idxRegistro] || '',
+        bio: cols[idxBio] || '',
+        publico: cols[idxPublico] || '',
+        modalidade: cols[idxModalidade] || '',
+        whatsapp: cols[idxWhatsapp] ? cols[idxWhatsapp].replace(/\D/g, '') : '',
+        email: cols[idxEmail] || '',
+        instagram: cols[idxInstagram] ? cols[idxInstagram].replace('@', '') : '',
+        periodos: periodosList.length > 0 ? periodosList.slice(0, 2).join(' | ') : 'Não informado',
         foto: formatarUrlDrive(fotoUrl)
       });
     }
@@ -108,7 +142,8 @@ function parseCSV(text) {
 async function carregarDados() {
   atualizarDataESaudacao();
   try {
-    const response = await fetch(CSV_URL);
+    const timestamp = new Date().getTime();
+    const response = await fetch(`${CSV_URL}&nocache=${timestamp}`, { cache: 'reload' });
     const data = await response.text();
     listaCompleta = parseCSV(data);
     
@@ -116,53 +151,53 @@ async function carregarDados() {
     renderizarCards(listaCompleta);
   } catch (error) {
     console.error('Erro ao carregar dados:', error);
-    document.getElementById('gridProfissionais').innerHTML = 
-      '<div style="color: red; padding: 20px;">Erro ao carregar a lista de profissionais.</div>';
+    const grid = document.getElementById('gridProfissionais');
+    if (grid) {
+      grid.innerHTML = '<div style="color: red; padding: 20px;">Erro ao carregar a lista de profissionais.</div>';
+    }
   }
 }
 
 function preencherFiltros() {
   const selectProf = document.getElementById('selectProfissao');
   const selectCid = document.getElementById('selectCidade');
-  const selectEsp = document.getElementById('selectEspecialidade');
+
+  if (selectProf) selectProf.innerHTML = '<option value="">Todas as profissões</option>';
+  if (selectCid) selectCid.innerHTML = '<option value="">Todas as cidades</option>';
 
   const profissoes = new Set();
   const cidades = new Set();
-  const especialidades = new Set();
 
   listaCompleta.forEach(p => {
-    if (p.profissao) profissoes.add(padronizarTexto(p.profissao));
+    if (p.profissao) profissoes.add(p.profissao);
     if (p.cidade) cidades.add(padronizarTexto(p.cidade));
-    if (p.especialidade) {
-      p.especialidade.split(',').forEach(e => {
-        if (e.trim()) especialidades.add(padronizarTexto(e.trim()));
-      });
-    }
   });
 
-  Array.from(profissoes).sort().forEach(prof => {
-    selectProf.innerHTML += `<option value="${prof}">${prof}</option>`;
-  });
+  if (selectProf) {
+    Array.from(profissoes).sort().forEach(prof => {
+      selectProf.innerHTML += `<option value="${prof}">${prof}</option>`;
+    });
+  }
 
-  Array.from(cidades).sort().forEach(cid => {
-    selectCid.innerHTML += `<option value="${cid}">${cid}</option>`;
-  });
-
-  Array.from(especialidades).sort().forEach(esp => {
-    selectEsp.innerHTML += `<option value="${esp}">${esp}</option>`;
-  });
+  if (selectCid) {
+    Array.from(cidades).sort().forEach(cid => {
+      selectCid.innerHTML += `<option value="${cid}">${cid}</option>`;
+    });
+  }
 }
 
 function renderizarCards(profissionais) {
   const grid = document.getElementById('gridProfissionais');
   const contador = document.getElementById('contadorResultados');
+  if (!grid) return;
+
   grid.innerHTML = '';
-  contador.innerText = `Profissionais encontrados (${profissionais.length})`;
+  if (contador) contador.innerText = `Profissionais encontrados (${profissionais.length})`;
 
   if (profissionais.length === 0) {
     grid.innerHTML = `
-      <div style="color: var(--text-muted); padding: 20px;">
-        Nenhum profissional encontrado com os filtros selecionados.
+      <div style="color: var(--text-muted); padding: 20px; text-align: center; width: 100%;">
+        Nenhum profissional encontrado.
       </div>`;
     return;
   }
@@ -178,14 +213,15 @@ function renderizarCards(profissionais) {
 
     const tagsArr = p.servicos ? p.servicos.split(',').slice(0, 2) : [];
     const tagsHTML = tagsArr.map(t => `<span class="prof-tag">${padronizarTexto(t)}</span>`).join('');
+    const especialidadeExibida = padronizarTexto(p.especialidade);
 
     card.innerHTML = `
       <i class="fa-regular fa-heart prof-fav"></i>
       <div class="prof-avatar">${avatarHTML}</div>
       <div class="prof-body">
         <div class="prof-name" title="${p.nome}">${p.nome}</div>
-        <div class="prof-profession">${padronizarTexto(p.profissao)}</div>
-        ${p.especialidade ? `<div class="prof-spec">${padronizarTexto(p.especialidade)}</div>` : ''}
+        <div class="prof-profession">${p.profissao}</div>
+        ${especialidadeExibida ? `<div class="prof-spec">${especialidadeExibida}</div>` : ''}
         <div class="prof-location"><i class="fa-solid fa-location-dot"></i> ${padronizarTexto(p.cidade) || 'Itapevi'}</div>
         <div class="prof-tags">${tagsHTML}</div>
         <div class="prof-hours"><i class="fa-regular fa-clock"></i> ${p.periodos}</div>
@@ -210,18 +246,11 @@ function renderizarCards(profissionais) {
   grid.appendChild(tipCard);
 }
 
-function scrollCarrossel(distancia) {
-  document.getElementById('sliderContainer').scrollBy({
-    left: distancia,
-    behavior: 'smooth'
-  });
-}
-
 function abrirModal(p) {
   document.getElementById('modalNome').innerText = p.nome || 'Sem nome';
   document.getElementById('modalRegistro').innerText = p.registro ? `Reg: ${p.registro}` : 'Sem registro';
   document.getElementById('modalBio').innerText = p.bio || '-';
-  document.getElementById('modalEspecialidades').innerText = p.especialidade || '-';
+  document.getElementById('modalEspecialidades').innerText = padronizarTexto(p.especialidade) || '-';
   document.getElementById('modalServicos').innerText = p.servicos || '-';
   document.getElementById('modalPublico').innerText = p.publico || '-';
   document.getElementById('modalModalidade').innerText = p.modalidade || '-';
@@ -265,19 +294,22 @@ function fecharModal() {
 
 window.onclick = function(event) {
   const modal = document.getElementById('modalResumo');
-  if (event.target === modal) {
-    fecharModal();
-  }
+  if (event.target === modal) fecharModal();
 };
 
 function aplicarFiltros() {
-  const prof = document.getElementById('selectProfissao').value.toLowerCase();
-  const cid = document.getElementById('selectCidade').value.toLowerCase();
-  const esp = document.getElementById('selectEspecialidade').value.toLowerCase();
-  const srv = document.getElementById('inputServicos').value.toLowerCase();
+  const prof = (document.getElementById('selectProfissao')?.value || '').trim().toLowerCase();
+  const cid = (document.getElementById('selectCidade')?.value || '').trim().toLowerCase();
+  
+  // Pega o valor do input da Especialidade
+  const elEsp = document.getElementById('inputEspecialidade') || document.getElementById('selectEspecialidade');
+  const esp = (elEsp?.value || '').trim().toLowerCase();
+
+  const elSrv = document.getElementById('inputServicos');
+  const srv = (elSrv?.value || '').trim().toLowerCase();
 
   const filtrados = listaCompleta.filter(p => {
-    const matchProf = !prof || p.profissao.toLowerCase().includes(prof);
+    const matchProf = !prof || p.profissao.toLowerCase() === prof;
     const matchCid = !cid || p.cidade.toLowerCase().includes(cid);
     const matchEsp = !esp || p.especialidade.toLowerCase().includes(esp);
     const matchSrv = !srv || p.servicos.toLowerCase().includes(srv) || p.bio.toLowerCase().includes(srv);
@@ -289,10 +321,11 @@ function aplicarFiltros() {
 }
 
 function limparFiltros() {
-  document.getElementById('selectProfissao').value = '';
-  document.getElementById('selectCidade').value = '';
-  document.getElementById('selectEspecialidade').value = '';
-  document.getElementById('inputServicos').value = '';
+  if (document.getElementById('selectProfissao')) document.getElementById('selectProfissao').value = '';
+  if (document.getElementById('selectCidade')) document.getElementById('selectCidade').value = '';
+  if (document.getElementById('inputEspecialidade')) document.getElementById('inputEspecialidade').value = '';
+  if (document.getElementById('selectEspecialidade')) document.getElementById('selectEspecialidade').value = '';
+  if (document.getElementById('inputServicos')) document.getElementById('inputServicos').value = '';
   renderizarCards(listaCompleta);
 }
 

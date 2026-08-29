@@ -27,54 +27,54 @@
     </div>
 
     <header>
-  <div class="header-container">
-    <div class="brand">
-      <img src="assets/logo-rede-vitta.png" alt="Logo Rede Vitta" class="brand-logo-img"
-           onerror="this.onerror=null; this.style.display='none'; document.getElementById('logoFallback').style.display='flex';">
-      <div class="brand-logo-fallback" id="logoFallback" style="display: none;">
-        <i class="fa-solid fa-hospital-user"></i>
-      </div>
-      <div>
-        <div class="brand-title">Rede Vitta</div>
-        <div class="brand-subtitle">Coworking Saúde</div>
-      </div>
-    </div>
+      <div class="header-container">
+        <div class="brand">
+          <img src="assets/logo-rede-vitta.png" alt="Logo Rede Vitta" class="brand-logo-img"
+               onerror="this.onerror=null; this.style.display='none'; document.getElementById('logoFallback').style.display='flex';">
+          <div class="brand-logo-fallback" id="logoFallback" style="display: none;">
+            <i class="fa-solid fa-hospital-user"></i>
+          </div>
+          <div>
+            <div class="brand-title">Rede Vitta</div>
+            <div class="brand-subtitle">Coworking Saúde</div>
+          </div>
+        </div>
 
-    <!-- PASSO A PASSO CENTRALIZADO -->
-    <div class="how-it-works">
-      <div class="how-title">✨ Como funciona?</div>
-      <div class="how-steps">
-        <div class="step-item">
-          <span class="step-icon">🔎</span>
-          <div>
-            <strong>1. Pesquise</strong>
-            <p>Profissão, cidade ou área</p>
+        <!-- PASSO A PASSO CENTRALIZADO -->
+        <div class="how-it-works">
+          <div class="how-title">✨ Como funciona?</div>
+          <div class="how-steps">
+            <div class="step-item">
+              <span class="step-icon">🔎</span>
+              <div>
+                <strong>1. Pesquise</strong>
+                <p>Profissão, cidade ou área</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right step-arrow"></i>
+            <div class="step-item">
+              <span class="step-icon">👤</span>
+              <div>
+                <strong>2. Encontre</strong>
+                <p>Confira os perfis</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right step-arrow"></i>
+            <div class="step-item">
+              <span class="step-icon">📞</span>
+              <div>
+                <strong>3. Contate</strong>
+                <p>Fale diretamente</p>
+              </div>
+            </div>
           </div>
         </div>
-        <i class="fa-solid fa-chevron-right step-arrow"></i>
-        <div class="step-item">
-          <span class="step-icon">👤</span>
-          <div>
-            <strong>2. Encontre</strong>
-            <p>Confira os perfis</p>
-          </div>
-        </div>
-        <i class="fa-solid fa-chevron-right step-arrow"></i>
-        <div class="step-item">
-          <span class="step-icon">📞</span>
-          <div>
-            <strong>3. Contate</strong>
-            <p>Fale diretamente</p>
-          </div>
+
+        <div class="badge-location">
+          <i class="fa-solid fa-location-dot"></i> Itapevi e Região
         </div>
       </div>
-    </div>
-
-    <div class="badge-location">
-      <i class="fa-solid fa-location-dot"></i> Itapevi e Região
-    </div>
-  </div>
-</header>
+    </header>
 
     <div class="container">
       
@@ -136,7 +136,7 @@
         <div class="filter-grid">
           
           <div class="filter-group">
-            <label>Profissão</label>
+            <label for="selectProfissao">Profissão</label>
             <div class="filter-input-wrapper">
               <i class="fa-solid fa-user-doctor"></i>
               <select id="selectProfissao" onchange="aplicarFiltros()">
@@ -146,7 +146,7 @@
           </div>
 
           <div class="filter-group">
-            <label>Cidade</label>
+            <label for="selectCidade">Cidade</label>
             <div class="filter-input-wrapper">
               <i class="fa-solid fa-location-dot"></i>
               <select id="selectCidade" onchange="aplicarFiltros()">
@@ -155,18 +155,22 @@
             </div>
           </div>
 
+          <!-- CAMPO ESPECIALIDADE CORRIGIDO -->
           <div class="filter-group">
-            <label>Especialidade</label>
+            <label for="inputEspecialidade">Especialidade</label>
             <div class="filter-input-wrapper">
-              <i class="fa-solid fa-stethoscope"></i>
-              <select id="selectEspecialidade" onchange="aplicarFiltros()">
-                <option value="">Todas as Especialidades</option>
-              </select>
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input 
+                type="text" 
+                id="inputEspecialidade" 
+                placeholder="Digite a especialidade..." 
+                oninput="aplicarFiltros()"
+              >
             </div>
           </div>
 
           <div class="filter-group">
-            <label>Serviços Prestados</label>
+            <label for="inputServicos">Serviços Prestados</label>
             <div class="filter-input-wrapper">
               <i class="fa-solid fa-magnifying-glass"></i>
               <input type="text" id="inputServicos" placeholder="Ex: Consulta, Pré-natal..." oninput="aplicarFiltros()">
