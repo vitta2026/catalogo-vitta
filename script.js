@@ -1,5 +1,8 @@
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQRSLkWdYOqO25SuyaGCdvfxKvoPXMRsWs9WBQ22Q_G64-DnHWdyWKEUbkbm8LirCKb0yZRT_Le-j5Q/pub?gid=1879601222&single=true&output=csv';
 
+// Proxy alternativo para evitar bloqueio de CORS no GitHub Pages
+const PROXY_URL = 'https://api.allorigins.win/raw?url=';
+
 let listaCompleta = [];
 
 function atualizarDataESaudacao() {
@@ -141,19 +144,39 @@ function parseCSV(text) {
 
 async function carregarDados() {
   atualizarDataESaudacao();
+  const grid = document.getElementById('gridProfissionais');
+
   try {
     const timestamp = new Date().getTime();
-    const response = await fetch(`${CSV_URL}&nocache=${timestamp}`, { cache: 'reload' });
+    let response;
+
+    // Tenta primeiro o acesso direto
+    try {
+      response = await fetch(`${CSV_URL}&nocache=${timestamp}`);
+      if (!response.ok) throw new Error('Acesso direto bloqueado');
+    } catch (errDirect) {
+      // Se falhar no GitHub Pages devido ao CORS, usa o Proxy
+      console.warn('Requisição direta falhou ou foi bloqueada por CORS. Tentando via Proxy...');
+      response = await fetch(`${PROXY_URL}${encodeURIComponent(CSV_URL)}`);
+    }
+
+    if (!response || !response.ok) {
+      throw new Error('Falha ao obter os dados da planilha.');
+    }
+
     const data = await response.text();
     listaCompleta = parseCSV(data);
     
     preencherFiltros();
     renderizarCards(listaCompleta);
+
   } catch (error) {
     console.error('Erro ao carregar dados:', error);
-    const grid = document.getElementById('gridProfissionais');
     if (grid) {
-      grid.innerHTML = '<div style="color: red; padding: 20px;">Erro ao carregar a lista de profissionais.</div>';
+      grid.innerHTML = `
+        <div style="color: #e11d48; padding: 20px; text-align: center; width: 100%; font-weight: 600;">
+          Não foi possível carregar a lista de profissionais. Verifique o compartilhamento da planilha no Google Drive.
+        </div>`;
     }
   }
 }
@@ -162,8 +185,8 @@ function preencherFiltros() {
   const selectProf = document.getElementById('selectProfissao');
   const selectCid = document.getElementById('selectCidade');
 
-  if (selectProf) selectProf.innerHTML = '<option value="">Todas as profissões</option>';
-  if (selectCid) selectCid.innerHTML = '<option value="">Todas as cidades</option>';
+  if (selectProf) selectProf.innerHTML = '<option value="">Todas as Profissões</option>';
+  if (selectCid) selectCid.innerHTML = '<option value="">Todas as Cidades</option>';
 
   const profissoes = new Set();
   const cidades = new Set();
@@ -301,8 +324,7 @@ function aplicarFiltros() {
   const prof = (document.getElementById('selectProfissao')?.value || '').trim().toLowerCase();
   const cid = (document.getElementById('selectCidade')?.value || '').trim().toLowerCase();
   
-  // Pega o valor do input da Especialidade
-  const elEsp = document.getElementById('inputEspecialidade') || document.getElementById('selectEspecialidade');
+  const elEsp = document.getElementById('inputEspecialidade');
   const esp = (elEsp?.value || '').trim().toLowerCase();
 
   const elSrv = document.getElementById('inputServicos');
@@ -324,9 +346,15 @@ function limparFiltros() {
   if (document.getElementById('selectProfissao')) document.getElementById('selectProfissao').value = '';
   if (document.getElementById('selectCidade')) document.getElementById('selectCidade').value = '';
   if (document.getElementById('inputEspecialidade')) document.getElementById('inputEspecialidade').value = '';
-  if (document.getElementById('selectEspecialidade')) document.getElementById('selectEspecialidade').value = '';
   if (document.getElementById('inputServicos')) document.getElementById('inputServicos').value = '';
   renderizarCards(listaCompleta);
+}
+
+function scrollCarrossel(deslocamento) {
+  const slider = document.getElementById('sliderContainer');
+  if (slider) {
+    slider.scrollBy({ left: deslocamento, behavior: 'smooth' });
+  }
 }
 
 window.onload = carregarDados;
